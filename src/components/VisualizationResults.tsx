@@ -43,7 +43,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "1",
         name: "KLIPPAN 2-seat sofa",
         price: "£199",
-        image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=300&h=200&fit=crop",
+        image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/klippan-2-seat-sofa-vissle-grey-70185395/"
       },
@@ -51,7 +51,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "2", 
         name: "FRIHETEN Corner sofa-bed",
         price: "£450",
-        image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=300&h=200&fit=crop",
+        image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/friheten-corner-sofa-bed-with-storage-skiftebo-dark-grey-s79307468/"
       }
@@ -61,7 +61,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "3",
         name: "EKEDALEN Extendable table",
         price: "£180",
-        image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=300&h=200&fit=crop",
+        image: "https://images.unsplash.com/photo-1549497538-303791108f95?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK", 
         link: "https://www.ikea.com/gb/en/p/ekedalen-extendable-table-white-00346721/"
       }
@@ -71,7 +71,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "4",
         name: "TOBIAS Chair",
         price: "£79",
-        image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=300&h=200&fit=crop",
+        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/tobias-chair-clear-chrome-plated-70263847/"
       }
@@ -81,7 +81,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "5",
         name: "MALM Bed frame",
         price: "£129", 
-        image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=300&h=200&fit=crop",
+        image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/malm-bed-frame-high-white-stained-oak-veneer-s99141591/"
       }
@@ -91,7 +91,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "6",
         name: "STOENSE Rug",
         price: "£45",
-        image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=300&h=200&fit=crop",
+        image: "https://images.unsplash.com/photo-1541558869434-2840d308329a?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK", 
         link: "https://www.ikea.com/gb/en/p/stoense-rug-low-pile-medium-grey-40438172/"
       }
@@ -103,10 +103,11 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
 
 export const VisualizationResults = ({ roomImage, selections, onBack, onStartOver }: VisualizationResultsProps) => {
   const [processedFurnitureImage, setProcessedFurnitureImage] = useState<string>("");
-  const [isProcessing, setIsProcessing] = useState(true);
+  const [isProcessing, setIsProcessing] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [error, setError] = useState<string>("");
+  
   const products = getProductsBySelection(selections.furnitureType, selections.style);
-  const furnitureOverlay = getFurnitureOverlay(selections.furnitureType, selections.style);
 
   // Set the first product as selected by default
   useEffect(() => {
@@ -115,17 +116,31 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
     }
   }, [products, selectedProduct]);
 
+  // Process the initial furniture image or selected product image
   useEffect(() => {
     const processImage = async () => {
-      if (furnitureOverlay) {
+      let imageToProcess = "";
+      
+      if (selectedProduct) {
+        imageToProcess = selectedProduct.image;
+      } else {
+        imageToProcess = getFurnitureOverlay(selections.furnitureType, selections.style);
+      }
+
+      if (imageToProcess) {
         setIsProcessing(true);
+        setError("");
         console.log('Processing furniture image for background removal...');
+        
         try {
-          const processedImage = await removeBackground(furnitureOverlay);
+          const processedImage = await removeBackground(imageToProcess);
+          console.log('Background removal completed successfully');
           setProcessedFurnitureImage(processedImage);
         } catch (error) {
           console.error('Failed to process image:', error);
-          setProcessedFurnitureImage(furnitureOverlay);
+          setError('Failed to process image');
+          // Use original image as fallback
+          setProcessedFurnitureImage(imageToProcess);
         } finally {
           setIsProcessing(false);
         }
@@ -133,23 +148,14 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
     };
 
     processImage();
-  }, [furnitureOverlay]);
+  }, [selectedProduct, selections.furnitureType, selections.style]);
 
-  const handleProductSelect = (product: Product) => {
+  const handleProductSelect = async (product: Product) => {
+    if (selectedProduct?.id === product.id) return; // Already selected
+    
+    console.log('Product selected:', product.name);
     setSelectedProduct(product);
-    // Process the selected product's image for the mockup
-    setIsProcessing(true);
-    removeBackground(product.image)
-      .then(processedImage => {
-        setProcessedFurnitureImage(processedImage);
-      })
-      .catch(error => {
-        console.error('Failed to process selected product image:', error);
-        setProcessedFurnitureImage(product.image);
-      })
-      .finally(() => {
-        setIsProcessing(false);
-      });
+    // The useEffect above will handle the image processing
   };
 
   return (
@@ -191,7 +197,7 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
             
             {/* Processing indicator */}
             {isProcessing && (
-              <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+              <div className="absolute inset-0 flex items-center justify-center bg-black/50 z-10">
                 <div className="bg-white rounded-lg p-4 flex items-center space-x-3">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-green-600"></div>
                   <p className="text-sm font-medium">Processing furniture...</p>
@@ -199,29 +205,42 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
               </div>
             )}
             
+            {/* Error indicator */}
+            {error && !isProcessing && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/50 z-10">
+                <div className="bg-red-100 border border-red-400 text-red-700 rounded-lg p-4">
+                  <p className="text-sm font-medium">{error}</p>
+                </div>
+              </div>
+            )}
+            
             {/* Furniture overlay with removed background */}
-            {!isProcessing && processedFurnitureImage && (
-              <div className="absolute inset-0 flex items-center justify-center">
+            {!isProcessing && !error && processedFurnitureImage && (
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <img 
                   src={processedFurnitureImage}
                   alt={selectedProduct ? selectedProduct.name : `${selections.style} ${selections.furnitureType}`}
-                  className="max-w-[60%] max-h-[60%] object-contain"
+                  className="max-w-[50%] max-h-[50%] object-contain"
                   style={{
                     filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))',
+                  }}
+                  onError={(e) => {
+                    console.error('Failed to display processed image');
+                    setError('Failed to display furniture image');
                   }}
                 />
               </div>
             )}
             
             {/* AI Enhancement Badge */}
-            <div className="absolute top-4 right-4">
+            <div className="absolute top-4 right-4 z-20">
               <div className="bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg">
                 <p className="text-sm font-medium text-gray-900">✨ AI Enhanced</p>
               </div>
             </div>
             
             {/* Style and furniture type indicator */}
-            <div className="absolute bottom-4 left-4">
+            <div className="absolute bottom-4 left-4 z-20">
               <div className="bg-black/70 backdrop-blur-sm rounded-lg px-3 py-2">
                 <p className="text-sm font-medium text-white">
                   {selectedProduct ? selectedProduct.name : `${selections.style.charAt(0).toUpperCase() + selections.style.slice(1)} ${selections.furnitureType}`}
@@ -243,9 +262,9 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
               {products.map((product) => (
                 <Card 
                   key={product.id} 
-                  className={`p-4 cursor-pointer transition-all ${
+                  className={`p-4 cursor-pointer transition-all hover:shadow-lg ${
                     selectedProduct?.id === product.id 
-                      ? 'border-green-500 bg-green-50' 
+                      ? 'border-green-500 bg-green-50 ring-2 ring-green-200' 
                       : 'hover:bg-gray-50'
                   }`}
                   onClick={() => handleProductSelect(product)}
@@ -277,7 +296,10 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
               {selectedProduct && (
                 <Button 
                   className="w-full bg-orange-600 hover:bg-orange-700 text-white h-12"
-                  onClick={() => window.open(selectedProduct.link, '_blank')}
+                  onClick={() => {
+                    console.log('Opening product link:', selectedProduct.link);
+                    window.open(selectedProduct.link, '_blank');
+                  }}
                 >
                   Buy {selectedProduct.name} - {selectedProduct.price}
                 </Button>

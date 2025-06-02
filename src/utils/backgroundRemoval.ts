@@ -34,15 +34,25 @@ function resizeImageIfNeeded(canvas: HTMLCanvasElement, ctx: CanvasRenderingCont
 
 export const removeBackground = async (imageUrl: string): Promise<string> => {
   try {
-    console.log('Starting background removal process...');
+    console.log('Starting background removal process for:', imageUrl);
     
-    // Load the image
+    // Load the image first
     const image = await loadImage(imageUrl);
+    console.log('Image loaded successfully');
     
-    // Use 'wasm' device instead of 'webgpu' for better browser compatibility
-    const segmenter = await pipeline('image-segmentation', 'Xenova/segformer-b0-finetuned-ade-512-512', {
-      device: 'wasm',
-    });
+    // Initialize the segmentation pipeline with fallback to CPU if WebGPU fails
+    let segmenter;
+    try {
+      segmenter = await pipeline('image-segmentation', 'Xenova/segformer-b0-finetuned-ade-512-512', {
+        device: 'webgpu',
+      });
+      console.log('Using WebGPU for segmentation');
+    } catch (webgpuError) {
+      console.log('WebGPU failed, falling back to WASM:', webgpuError);
+      segmenter = await pipeline('image-segmentation', 'Xenova/segformer-b0-finetuned-ade-512-512', {
+        device: 'wasm',
+      });
+    }
     
     // Convert HTMLImageElement to canvas
     const canvas = document.createElement('canvas');
@@ -62,9 +72,10 @@ export const removeBackground = async (imageUrl: string): Promise<string> => {
     console.log('Processing with segmentation model...');
     const result = await segmenter(imageData);
     
-    console.log('Segmentation result:', result);
+    console.log('Segmentation result received');
     
     if (!result || !Array.isArray(result) || result.length === 0 || !result[0].mask) {
+      console.error('Invalid segmentation result:', result);
       throw new Error('Invalid segmentation result');
     }
     
@@ -105,6 +116,7 @@ export const removeBackground = async (imageUrl: string): Promise<string> => {
   } catch (error) {
     console.error('Error removing background:', error);
     // Return original image if background removal fails
+    console.log('Falling back to original image');
     return imageUrl;
   }
 };
@@ -112,8 +124,14 @@ export const removeBackground = async (imageUrl: string): Promise<string> => {
 export const loadImage = (url: string): Promise<HTMLImageElement> => {
   return new Promise((resolve, reject) => {
     const img = new Image();
-    img.onload = () => resolve(img);
-    img.onerror = reject;
+    img.onload = () => {
+      console.log('Image loaded from URL:', url);
+      resolve(img);
+    };
+    img.onerror = (error) => {
+      console.error('Failed to load image from URL:', url, error);
+      reject(error);
+    };
     img.crossOrigin = 'anonymous';
     img.src = url;
   });
