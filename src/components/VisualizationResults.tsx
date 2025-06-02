@@ -20,6 +20,19 @@ interface VisualizationResultsProps {
   onStartOver: () => void;
 }
 
+// Mock furniture overlay images based on selections
+const getFurnitureOverlay = (furnitureType: string, style: string): string => {
+  const furnitureImages = {
+    sofa: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=300&fit=crop&auto=format",
+    table: "https://images.unsplash.com/photo-1549497538-303791108f95?w=400&h=300&fit=crop&auto=format",
+    chair: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&auto=format",
+    bed: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=400&h=300&fit=crop&auto=format",
+    carpet: "https://images.unsplash.com/photo-1541558869434-2840d308329a?w=400&h=300&fit=crop&auto=format"
+  };
+  
+  return furnitureImages[furnitureType as keyof typeof furnitureImages] || "";
+};
+
 // Mock product data based on selections
 const getProductsBySelection = (furnitureType: string, style: string): Product[] => {
   const baseProducts = {
@@ -88,6 +101,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
 
 export const VisualizationResults = ({ roomImage, selections, onBack, onStartOver }: VisualizationResultsProps) => {
   const products = getProductsBySelection(selections.furnitureType, selections.style);
+  const furnitureOverlay = getFurnitureOverlay(selections.furnitureType, selections.style);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-orange-50">
@@ -116,23 +130,46 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
           </div>
         </Card>
 
-        {/* Visualized Room */}
+        {/* Visualized Room with Furniture Overlay */}
         <Card className="p-4">
           <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden relative">
+            {/* Original room image */}
             <img 
               src={roomImage} 
-              alt="Your room with furniture" 
+              alt="Your room" 
               className="w-full h-full object-cover"
             />
-            {/* Overlay to simulate AI visualization */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent flex items-end justify-center p-4">
-              <div className="bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2">
+            
+            {/* Furniture overlay */}
+            <div className="absolute inset-0 flex items-center justify-center">
+              <img 
+                src={furnitureOverlay}
+                alt={`${selections.style} ${selections.furnitureType}`}
+                className="max-w-[60%] max-h-[60%] object-contain opacity-90 drop-shadow-2xl"
+                style={{
+                  filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))',
+                }}
+              />
+            </div>
+            
+            {/* AI Enhancement Badge */}
+            <div className="absolute top-4 right-4">
+              <div className="bg-white/90 backdrop-blur-sm rounded-lg px-3 py-2 shadow-lg">
                 <p className="text-sm font-medium text-gray-900">✨ AI Enhanced</p>
+              </div>
+            </div>
+            
+            {/* Style and furniture type indicator */}
+            <div className="absolute bottom-4 left-4">
+              <div className="bg-black/70 backdrop-blur-sm rounded-lg px-3 py-2">
+                <p className="text-sm font-medium text-white">
+                  {selections.style.charAt(0).toUpperCase() + selections.style.slice(1)} {selections.furnitureType}
+                </p>
               </div>
             </div>
           </div>
           <p className="text-sm text-gray-600 mt-2 text-center">
-            Your room with {selections.style} {selections.furnitureType}
+            Your room with {selections.style} {selections.furnitureType} visualization
           </p>
         </Card>
 
