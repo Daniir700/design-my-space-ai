@@ -1,3 +1,4 @@
+
 import { pipeline, env } from '@huggingface/transformers';
 
 // Configure transformers.js to always download models
@@ -38,8 +39,9 @@ export const removeBackground = async (imageUrl: string): Promise<string> => {
     // Load the image
     const image = await loadImage(imageUrl);
     
+    // Use 'wasm' device instead of 'webgpu' for better browser compatibility
     const segmenter = await pipeline('image-segmentation', 'Xenova/segformer-b0-finetuned-ade-512-512', {
-      device: 'webgpu',
+      device: 'wasm',
     });
     
     // Convert HTMLImageElement to canvas

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -34,65 +35,65 @@ const getFurnitureOverlay = (furnitureType: string, style: string): string => {
   return furnitureImages[furnitureType as keyof typeof furnitureImages] || "";
 };
 
-// Mock product data based on selections
+// Mock product data based on selections with real working links
 const getProductsBySelection = (furnitureType: string, style: string): Product[] => {
   const baseProducts = {
     sofa: [
       {
         id: "1",
-        name: "3-Seat Fabric Sofa",
-        price: "£599",
+        name: "KLIPPAN 2-seat sofa",
+        price: "£199",
         image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=300&h=200&fit=crop",
         store: "IKEA UK",
-        link: "https://www.ikea.com/gb/en/"
+        link: "https://www.ikea.com/gb/en/p/klippan-2-seat-sofa-vissle-grey-70185395/"
       },
       {
         id: "2", 
-        name: "Corner Sectional Sofa",
-        price: "£899",
+        name: "FRIHETEN Corner sofa-bed",
+        price: "£450",
         image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=300&h=200&fit=crop",
-        store: "Wayfair UK",
-        link: "https://www.wayfair.co.uk/"
+        store: "IKEA UK",
+        link: "https://www.ikea.com/gb/en/p/friheten-corner-sofa-bed-with-storage-skiftebo-dark-grey-s79307468/"
       }
     ],
     table: [
       {
         id: "3",
-        name: "Round Dining Table",
-        price: "£349",
+        name: "EKEDALEN Extendable table",
+        price: "£180",
         image: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?w=300&h=200&fit=crop",
         store: "IKEA UK", 
-        link: "https://www.ikea.com/gb/en/"
+        link: "https://www.ikea.com/gb/en/p/ekedalen-extendable-table-white-00346721/"
       }
     ],
     chair: [
       {
         id: "4",
-        name: "Upholstered Dining Chair",
+        name: "TOBIAS Chair",
         price: "£79",
         image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=300&h=200&fit=crop",
-        store: "Wayfair UK",
-        link: "https://www.wayfair.co.uk/"
+        store: "IKEA UK",
+        link: "https://www.ikea.com/gb/en/p/tobias-chair-clear-chrome-plated-70263847/"
       }
     ],
     bed: [
       {
         id: "5",
-        name: "Platform Bed Frame",
-        price: "£299", 
+        name: "MALM Bed frame",
+        price: "£129", 
         image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=300&h=200&fit=crop",
         store: "IKEA UK",
-        link: "https://www.ikea.com/gb/en/"
+        link: "https://www.ikea.com/gb/en/p/malm-bed-frame-high-white-stained-oak-veneer-s99141591/"
       }
     ],
     carpet: [
       {
         id: "6",
-        name: "Area Rug",
-        price: "£159",
+        name: "STOENSE Rug",
+        price: "£45",
         image: "https://images.unsplash.com/photo-1721322800607-8c38375eef04?w=300&h=200&fit=crop",
-        store: "Wayfair UK", 
-        link: "https://www.wayfair.co.uk/"
+        store: "IKEA UK", 
+        link: "https://www.ikea.com/gb/en/p/stoense-rug-low-pile-medium-grey-40438172/"
       }
     ]
   };
@@ -103,8 +104,16 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
 export const VisualizationResults = ({ roomImage, selections, onBack, onStartOver }: VisualizationResultsProps) => {
   const [processedFurnitureImage, setProcessedFurnitureImage] = useState<string>("");
   const [isProcessing, setIsProcessing] = useState(true);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const products = getProductsBySelection(selections.furnitureType, selections.style);
   const furnitureOverlay = getFurnitureOverlay(selections.furnitureType, selections.style);
+
+  // Set the first product as selected by default
+  useEffect(() => {
+    if (products.length > 0 && !selectedProduct) {
+      setSelectedProduct(products[0]);
+    }
+  }, [products, selectedProduct]);
 
   useEffect(() => {
     const processImage = async () => {
@@ -125,6 +134,23 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
 
     processImage();
   }, [furnitureOverlay]);
+
+  const handleProductSelect = (product: Product) => {
+    setSelectedProduct(product);
+    // Process the selected product's image for the mockup
+    setIsProcessing(true);
+    removeBackground(product.image)
+      .then(processedImage => {
+        setProcessedFurnitureImage(processedImage);
+      })
+      .catch(error => {
+        console.error('Failed to process selected product image:', error);
+        setProcessedFurnitureImage(product.image);
+      })
+      .finally(() => {
+        setIsProcessing(false);
+      });
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-orange-50">
@@ -178,7 +204,7 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
               <div className="absolute inset-0 flex items-center justify-center">
                 <img 
                   src={processedFurnitureImage}
-                  alt={`${selections.style} ${selections.furnitureType}`}
+                  alt={selectedProduct ? selectedProduct.name : `${selections.style} ${selections.furnitureType}`}
                   className="max-w-[60%] max-h-[60%] object-contain"
                   style={{
                     filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))',
@@ -198,24 +224,32 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
             <div className="absolute bottom-4 left-4">
               <div className="bg-black/70 backdrop-blur-sm rounded-lg px-3 py-2">
                 <p className="text-sm font-medium text-white">
-                  {selections.style.charAt(0).toUpperCase() + selections.style.slice(1)} {selections.furnitureType}
+                  {selectedProduct ? selectedProduct.name : `${selections.style.charAt(0).toUpperCase() + selections.style.slice(1)} ${selections.furnitureType}`}
                 </p>
               </div>
             </div>
           </div>
           <p className="text-sm text-gray-600 mt-2 text-center">
-            Your room with {selections.style} {selections.furnitureType} visualization
+            Your room with {selectedProduct ? selectedProduct.name : `${selections.style} ${selections.furnitureType}`} visualization
           </p>
         </Card>
 
         {/* Product Recommendations */}
         <div className="space-y-4">
-          <h2 className="text-xl font-semibold text-gray-900">Recommended Products</h2>
+          <h2 className="text-xl font-semibold text-gray-900">Choose Your Furniture</h2>
           
           {products.length > 0 ? (
             <div className="space-y-4">
               {products.map((product) => (
-                <Card key={product.id} className="p-4">
+                <Card 
+                  key={product.id} 
+                  className={`p-4 cursor-pointer transition-all ${
+                    selectedProduct?.id === product.id 
+                      ? 'border-green-500 bg-green-50' 
+                      : 'hover:bg-gray-50'
+                  }`}
+                  onClick={() => handleProductSelect(product)}
+                >
                   <div className="flex space-x-4">
                     <div className="w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
                       <img 
@@ -228,16 +262,26 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
                       <h3 className="font-semibold text-gray-900">{product.name}</h3>
                       <p className="text-lg font-bold text-green-600">{product.price}</p>
                       <p className="text-sm text-gray-600">{product.store}</p>
-                      <Button 
-                        className="w-full bg-orange-600 hover:bg-orange-700 text-white"
-                        onClick={() => window.open(product.link, '_blank')}
-                      >
-                        View Product
-                      </Button>
+                      {selectedProduct?.id === product.id && (
+                        <div className="flex items-center space-x-2">
+                          <div className="w-3 h-3 bg-green-500 rounded-full"></div>
+                          <span className="text-sm text-green-600 font-medium">Selected for visualization</span>
+                        </div>
+                      )}
                     </div>
                   </div>
                 </Card>
               ))}
+              
+              {/* Buy Selected Product Button */}
+              {selectedProduct && (
+                <Button 
+                  className="w-full bg-orange-600 hover:bg-orange-700 text-white h-12"
+                  onClick={() => window.open(selectedProduct.link, '_blank')}
+                >
+                  Buy {selectedProduct.name} - {selectedProduct.price}
+                </Button>
+              )}
             </div>
           ) : (
             <Card className="p-8 text-center">
