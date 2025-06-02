@@ -1,8 +1,9 @@
-
+import { useState, useEffect } from "react";
 import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { UserSelections } from "@/pages/Index";
+import { removeBackground } from "@/utils/backgroundRemoval";
 
 interface Product {
   id: string;
@@ -100,8 +101,30 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
 };
 
 export const VisualizationResults = ({ roomImage, selections, onBack, onStartOver }: VisualizationResultsProps) => {
+  const [processedFurnitureImage, setProcessedFurnitureImage] = useState<string>("");
+  const [isProcessing, setIsProcessing] = useState(true);
   const products = getProductsBySelection(selections.furnitureType, selections.style);
   const furnitureOverlay = getFurnitureOverlay(selections.furnitureType, selections.style);
+
+  useEffect(() => {
+    const processImage = async () => {
+      if (furnitureOverlay) {
+        setIsProcessing(true);
+        console.log('Processing furniture image for background removal...');
+        try {
+          const processedImage = await removeBackground(furnitureOverlay);
+          setProcessedFurnitureImage(processedImage);
+        } catch (error) {
+          console.error('Failed to process image:', error);
+          setProcessedFurnitureImage(furnitureOverlay);
+        } finally {
+          setIsProcessing(false);
+        }
+      }
+    };
+
+    processImage();
+  }, [furnitureOverlay]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-50 to-orange-50">
@@ -140,17 +163,29 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
               className="w-full h-full object-cover"
             />
             
-            {/* Furniture overlay */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              <img 
-                src={furnitureOverlay}
-                alt={`${selections.style} ${selections.furnitureType}`}
-                className="max-w-[60%] max-h-[60%] object-contain opacity-90 drop-shadow-2xl"
-                style={{
-                  filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))',
-                }}
-              />
-            </div>
+            {/* Processing indicator */}
+            {isProcessing && (
+              <div className="absolute inset-0 flex items-center justify-center bg-black/50">
+                <div className="bg-white rounded-lg p-4 flex items-center space-x-3">
+                  <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-green-600"></div>
+                  <p className="text-sm font-medium">Processing furniture...</p>
+                </div>
+              </div>
+            )}
+            
+            {/* Furniture overlay with removed background */}
+            {!isProcessing && processedFurnitureImage && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <img 
+                  src={processedFurnitureImage}
+                  alt={`${selections.style} ${selections.furnitureType}`}
+                  className="max-w-[60%] max-h-[60%] object-contain"
+                  style={{
+                    filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))',
+                  }}
+                />
+              </div>
+            )}
             
             {/* AI Enhancement Badge */}
             <div className="absolute top-4 right-4">
