@@ -1,5 +1,4 @@
-
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -106,6 +105,9 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
   const [isProcessing, setIsProcessing] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [error, setError] = useState<string>("");
+  const [furniturePosition, setFurniturePosition] = useState({ x: 50, y: 50 }); // Percentage position
+  const [isDragging, setIsDragging] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   
   const products = getProductsBySelection(selections.furnitureType, selections.style);
 
@@ -155,7 +157,31 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
     
     console.log('Product selected:', product.name);
     setSelectedProduct(product);
-    // The useEffect above will handle the image processing
+    // The useEffect above will handle the image processing immediately
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (!containerRef.current) return;
+    setIsDragging(true);
+    e.preventDefault();
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDragging || !containerRef.current) return;
+    
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = ((e.clientX - rect.left) / rect.width) * 100;
+    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    
+    // Keep furniture within bounds
+    const clampedX = Math.max(10, Math.min(90, x));
+    const clampedY = Math.max(10, Math.min(90, y));
+    
+    setFurniturePosition({ x: clampedX, y: clampedY });
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
   };
 
   return (
@@ -187,7 +213,13 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
 
         {/* Visualized Room with Furniture Overlay */}
         <Card className="p-4">
-          <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden relative">
+          <div 
+            ref={containerRef}
+            className="aspect-video bg-gray-100 rounded-lg overflow-hidden relative cursor-move"
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+          >
             {/* Original room image */}
             <img 
               src={roomImage} 
@@ -216,11 +248,19 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
             
             {/* Furniture overlay with removed background */}
             {!isProcessing && !error && processedFurnitureImage && (
-              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+              <div 
+                className="absolute pointer-events-auto cursor-grab active:cursor-grabbing"
+                style={{
+                  left: `${furniturePosition.x}%`,
+                  top: `${furniturePosition.y}%`,
+                  transform: 'translate(-50%, -50%)',
+                }}
+                onMouseDown={handleMouseDown}
+              >
                 <img 
                   src={processedFurnitureImage}
                   alt={selectedProduct ? selectedProduct.name : `${selections.style} ${selections.furnitureType}`}
-                  className="max-w-[50%] max-h-[50%] object-contain"
+                  className="max-w-[200px] max-h-[200px] object-contain"
                   style={{
                     filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))',
                   }}
@@ -228,6 +268,7 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
                     console.error('Failed to display processed image');
                     setError('Failed to display furniture image');
                   }}
+                  draggable={false}
                 />
               </div>
             )}
@@ -247,6 +288,15 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
                 </p>
               </div>
             </div>
+
+            {/* Drag instruction */}
+            {!isDragging && (
+              <div className="absolute top-4 left-4 z-20">
+                <div className="bg-blue-500/90 backdrop-blur-sm rounded-lg px-3 py-2">
+                  <p className="text-sm font-medium text-white">🖱️ Drag to reposition</p>
+                </div>
+              </div>
+            )}
           </div>
           <p className="text-sm text-gray-600 mt-2 text-center">
             Your room with {selectedProduct ? selectedProduct.name : `${selections.style} ${selections.furnitureType}`} visualization
