@@ -64,7 +64,7 @@ const CATALOGUE: Product[] = [
     id: "s4", name: "Modern Compact Sofa", price: "£199", furnitureType: "sofa", style: "Minimalistic",
     image: "https://www.ikea.com/gb/en/images/products/lycksele-lovas-2-seat-sofa-bed-lycksele-gra__0187025_pe338383_s5.png",
     store: "IKEA UK", link: "https://www.ikea.com/gb/en/p/lycksele-lovas-2-seat-sofa-bed-lycksele-gra-s69290299/"
-  }
+  },
 const CATALOGUE: Product[] = [
   // ... existing products
 
