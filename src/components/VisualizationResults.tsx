@@ -45,7 +45,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "3",
         name: "EKTORP 3-seat sofa",
         price: "£325",
-        image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=400&fit=crop&auto=format&q=80",
+        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/ektorp-3-seat-sofa-totebo-light-beige-s59395929/"
       }
@@ -63,7 +63,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "5",
         name: "HEMNES Coffee table",
         price: "£120",
-        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&auto=format",
+        image: "https://images.unsplash.com/photo-1604709177225-055f99402ea3?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/hemnes-coffee-table-white-stain-50394479/"
       },
@@ -71,7 +71,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "6",
         name: "LUNNARP Coffee table",
         price: "£90",
-        image: "https://images.unsplash.com/photo-1549497538-303791108f95?w=600&h=400&fit=crop&auto=format&q=80",
+        image: "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/lunnarp-coffee-table-white-30395875/"
       }
@@ -81,7 +81,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "7",
         name: "TOBIAS Chair",
         price: "£79",
-        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&auto=format",
+        image: "https://images.unsplash.com/photo-1581539250439-c96689b516dd?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/tobias-chair-clear-chrome-plated-70263847/"
       },
@@ -97,7 +97,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "9",
         name: "ADDE Chair",
         price: "£25",
-        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=400&fit=crop&auto=format&q=80",
+        image: "https://images.unsplash.com/photo-1503602642458-232111445657?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/adde-chair-white-70103408/"
       }
@@ -123,7 +123,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "12",
         name: "BRIMNES Bed frame",
         price: "£150",
-        image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=600&h=400&fit=crop&auto=format&q=80",
+        image: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/brimnes-bed-frame-with-storage-white-s59007108/"
       }
@@ -133,7 +133,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "13",
         name: "STOENSE Rug",
         price: "£45",
-        image: "https://images.unsplash.com/photo-1541558869434-2840d308329a?w=400&h=300&fit=crop&auto=format",
+        image: "https://images.unsplash.com/photo-1577140917170-285929fb55b7?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK", 
         link: "https://www.ikea.com/gb/en/p/stoense-rug-low-pile-medium-grey-40438172/"
       },
@@ -149,7 +149,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "15",
         name: "TYVELSE Rug",
         price: "£80",
-        image: "https://images.unsplash.com/photo-1541558869434-2840d308329a?w=600&h=400&fit=crop&auto=format&q=80",
+        image: "https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/tyvelse-rug-low-pile-off-white-50388522/"
       }
@@ -165,7 +165,11 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [error, setError] = useState<string>("");
   const [furniturePosition, setFurniturePosition] = useState({ x: 50, y: 50 });
+  const [furnitureScale, setFurnitureScale] = useState(1);
+  const [furnitureRotation, setFurnitureRotation] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
+  const [lastPinchDistance, setLastPinchDistance] = useState(0);
+  const [lastTouchAngle, setLastTouchAngle] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   
   const products = getProductsBySelection(selections.furnitureType, selections.style);
@@ -208,7 +212,29 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
     
     console.log('Product selected:', product.name);
     setSelectedProduct(product);
+    // Reset transformations when switching products
+    setFurnitureScale(1);
+    setFurnitureRotation(0);
     // The useEffect above will handle the image processing automatically
+  };
+
+  // Calculate distance between two touch points
+  const getTouchDistance = (touches: TouchList) => {
+    if (touches.length < 2) return 0;
+    const touch1 = touches[0];
+    const touch2 = touches[1];
+    return Math.sqrt(
+      Math.pow(touch2.clientX - touch1.clientX, 2) + 
+      Math.pow(touch2.clientY - touch1.clientY, 2)
+    );
+  };
+
+  // Calculate angle between two touch points
+  const getTouchAngle = (touches: TouchList) => {
+    if (touches.length < 2) return 0;
+    const touch1 = touches[0];
+    const touch2 = touches[1];
+    return Math.atan2(touch2.clientY - touch1.clientY, touch2.clientX - touch1.clientX);
   };
 
   // Touch and mouse event handlers for mobile compatibility
@@ -221,27 +247,56 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
 
   const handleStart = (e: React.MouseEvent | React.TouchEvent) => {
     if (!containerRef.current) return;
-    setIsDragging(true);
+    
+    if ('touches' in e && e.touches.length === 2) {
+      // Two finger touch - prepare for pinch/rotate
+      setLastPinchDistance(getTouchDistance(e.touches));
+      setLastTouchAngle(getTouchAngle(e.touches));
+    } else {
+      // Single touch or mouse - prepare for drag
+      setIsDragging(true);
+    }
     e.preventDefault();
   };
 
   const handleMove = (e: React.MouseEvent | React.TouchEvent) => {
-    if (!isDragging || !containerRef.current) return;
+    if (!containerRef.current) return;
     
-    const rect = containerRef.current.getBoundingClientRect();
-    const pos = getEventPosition(e);
-    const x = ((pos.x - rect.left) / rect.width) * 100;
-    const y = ((pos.y - rect.top) / rect.height) * 100;
-    
-    // Keep furniture within bounds
-    const clampedX = Math.max(10, Math.min(90, x));
-    const clampedY = Math.max(10, Math.min(90, y));
-    
-    setFurniturePosition({ x: clampedX, y: clampedY });
+    if ('touches' in e && e.touches.length === 2) {
+      // Two finger touch - handle pinch and rotate
+      const currentDistance = getTouchDistance(e.touches);
+      const currentAngle = getTouchAngle(e.touches);
+      
+      if (lastPinchDistance > 0) {
+        // Handle pinch to scale
+        const scaleChange = currentDistance / lastPinchDistance;
+        setFurnitureScale(prev => Math.max(0.3, Math.min(3, prev * scaleChange)));
+      }
+      
+      // Handle rotation
+      const angleDiff = currentAngle - lastTouchAngle;
+      setFurnitureRotation(prev => prev + (angleDiff * 180 / Math.PI));
+      
+      setLastPinchDistance(currentDistance);
+      setLastTouchAngle(currentAngle);
+    } else if (isDragging) {
+      // Single touch or mouse - handle drag
+      const rect = containerRef.current.getBoundingClientRect();
+      const pos = getEventPosition(e);
+      const x = ((pos.x - rect.left) / rect.width) * 100;
+      const y = ((pos.y - rect.top) / rect.height) * 100;
+      
+      // Keep furniture within bounds
+      const clampedX = Math.max(10, Math.min(90, x));
+      const clampedY = Math.max(10, Math.min(90, y));
+      
+      setFurniturePosition({ x: clampedX, y: clampedY });
+    }
   };
 
   const handleEnd = () => {
     setIsDragging(false);
+    setLastPinchDistance(0);
   };
 
   return (
@@ -315,7 +370,7 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
                 style={{
                   left: `${furniturePosition.x}%`,
                   top: `${furniturePosition.y}%`,
-                  transform: 'translate(-50%, -50%)',
+                  transform: `translate(-50%, -50%) scale(${furnitureScale}) rotate(${furnitureRotation}deg)`,
                 }}
                 onMouseDown={handleStart}
                 onTouchStart={handleStart}
@@ -352,14 +407,12 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
               </div>
             </div>
 
-            {/* Drag instruction */}
-            {!isDragging && (
-              <div className="absolute top-4 left-4 z-20">
-                <div className="bg-blue-500/90 backdrop-blur-sm rounded-lg px-3 py-2">
-                  <p className="text-sm font-medium text-white">🖱️ Drag to reposition</p>
-                </div>
+            {/* Interaction instructions */}
+            <div className="absolute top-4 left-4 z-20">
+              <div className="bg-blue-500/90 backdrop-blur-sm rounded-lg px-3 py-2">
+                <p className="text-xs font-medium text-white">🖱️ Drag • 🤏 Pinch to scale • ↻ Rotate</p>
               </div>
-            )}
+            </div>
           </div>
           <p className="text-sm text-gray-600 mt-2 text-center">
             Your room with {selectedProduct ? selectedProduct.name : `${selections.style} ${selections.furnitureType}`} visualization
