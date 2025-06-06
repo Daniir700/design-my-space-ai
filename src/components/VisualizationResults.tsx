@@ -65,6 +65,204 @@ const CATALOGUE: Product[] = [
     image: "https://www.ikea.com/gb/en/images/products/lycksele-lovas-2-seat-sofa-bed-lycksele-gra__0187025_pe338383_s5.png",
     store: "IKEA UK", link: "https://www.ikea.com/gb/en/p/lycksele-lovas-2-seat-sofa-bed-lycksele-gra-s69290299/"
   }
+const CATALOGUE: Product[] = [
+  // ... existing products
+
+  // Minimalistic Tables
+  {
+    id: "mi_tb_1",
+    name: "Ebern Designs Lift-Top Storage Coffee Table",
+    price: "£68.99",
+    furnitureType: "table",
+    style: "Minimalistic",
+    image: "https://secure.img1-fg.wfcdn.com/im/79954654/resize-h445-w445%5Ecompr-r85/2461/246113778/default_name.jpg",
+    store: "Wayfair UK",
+    link: "https://www.wayfair.co.uk/furniture/pdp/ebern-designs-lift-top-storage-coffee-table-u001146215.html"
+  },
+  {
+    id: "mi_tb_2",
+    name: "Ivy Bronx Chalsea Coffee Table with Storage",
+    price: "£205.99",
+    furnitureType: "table",
+    style: "Minimalistic",
+    image: "https://secure.img1-fg.wfcdn.com/im/84937117/resize-h445-w445%5Ecompr-r85/2461/246113778/default_name.jpg",
+    store: "Wayfair UK",
+    link: "https://www.wayfair.co.uk/furniture/pdp/ivy-bronx-chalsea-coffee-table-with-storage-u001146215.html"
+  },
+  {
+    id: "mi_tb_3",
+    name: "Cloud Modern Irregular Indoor Tea Table",
+    price: "£213.12",
+    furnitureType: "table",
+    style: "Minimalistic",
+    image: "https://m.media-amazon.com/images/I/61tFzJ5V2pL._AC_SL1500_.jpg",
+    store: "Amazon UK",
+    link: "https://www.amazon.co.uk/dp/B0C7K5X7YF"
+  },
+
+  // Italian Tables
+  {
+    id: "it_tb_1",
+    name: "Arredoclassic Romantica Italian Dining Table",
+    price: "£864.00",
+    furnitureType: "table",
+    style: "Italian",
+    image: "https://www.furnituredirectuk.net/media/catalog/product/cache/1/image/800x800/9df78eab33525d08d6e5fb8d27136e95/a/r/arredoclassic_romantica_italian_fixed_top_pedestal_base_rectangular_dining_table_only.jpg",
+    store: "Furniture Direct UK",
+    link: "https://www.furnituredirectuk.net/arredoclassic-romantica-italian-fixed-top-pedestal-base-rectangular-dining-table-only.html"
+  },
+  {
+    id: "it_tb_2",
+    name: "Viadurini Modern Dining Table in Knotted Oak",
+    price: "£1,525.51",
+    furnitureType: "table",
+    style: "Italian",
+    image: "https://www.viadurini.co.uk/media/catalog/product/cache/1/image/800x800/9df78eab33525d08d6e5fb8d27136e95/m/o/modern-table-in-knotted-oak-wood-made-in-italy-zerba.jpg",
+    store: "Viadurini",
+    link: "https://www.viadurini.co.uk/modern-table-in-knotted-oak-wood-made-in-italy-zerba"
+  },
+  {
+    id: "it_tb_3",
+    name: "Cassoni Acco Table by Miniforms",
+    price: "£4,756.00",
+    furnitureType: "table",
+    style: "Italian",
+    image: "https://cassoni.com/wp-content/uploads/2021/04/Acco-Table.jpg",
+    store: "Cassoni",
+    link: "https://cassoni.com/product/acco-table/"
+  },
+
+  // Oriental Tables
+  {
+    id: "or_tb_1",
+    name: "Marrakesch Oriental Folding Side Table",
+    price: "£49.69",
+    furnitureType: "table",
+    style: "Oriental",
+    image: "https://m.media-amazon.com/images/I/71ZqON9a1FL._AC_SL1500_.jpg",
+    store: "Amazon UK",
+    link: "https://www.amazon.co.uk/dp/B07Y5VJ8L5"
+  },
+  {
+    id: "or_tb_2",
+    name: "Shimu Chinese Antique Side Table",
+    price: "£495.00",
+    furnitureType: "table",
+    style: "Oriental",
+    image: "https://www.shimu.co.uk/wp-content/uploads/2021/06/CT09N-600x600.jpg",
+    store: "Shimu",
+    link: "https://www.shimu.co.uk/product/chinese-antique-side-table/"
+  },
+  {
+    id: "or_tb_3",
+    name: "Orchid Chinese Console Table",
+    price: "£1,195.00",
+    furnitureType: "table",
+    style: "Oriental",
+    image: "https://www.orchidfurniture.co.uk/wp-content/uploads/2019/06/CHC-01-1.jpg",
+    store: "Orchid Furniture",
+    link: "https://www.orchidfurniture.co.uk/product/chinese-console-table/"
+  },
+
+  // Minimalistic Carpets
+  {
+    id: "mi_ca_1",
+    name: "Next Mid Natural Minimalist Block Rug",
+    price: "£50.00",
+    furnitureType: "carpet",
+    style: "Minimalistic",
+    image: "https://media.next.co.uk/i/Next/936-312s",
+    store: "Next",
+    link: "https://www.next.co.uk/style/st936312"
+  },
+  {
+    id: "mi_ca_2",
+    name: "Ruggable Minimalist Rug",
+    price: "£129.00",
+    furnitureType: "carpet",
+    style: "Minimalistic",
+    image: "https://ruggable.co.uk/cdn/shop/products/MinimalistRug.jpg",
+    store: "Ruggable UK",
+    link: "https://ruggable.co.uk/collections/minimalist-rugs"
+  },
+  {
+    id: "mi_ca_3",
+    name: "Rugette Minimalist Solid Colour Rug",
+    price: "£99.00",
+    furnitureType: "carpet",
+    style: "Minimalistic",
+    image: "https://rugette.co.uk/cdn/shop/products/SolidColourRug.jpg",
+    store: "Rugette",
+    link: "https://rugette.co.uk/collections/minimalist-rugs"
+  },
+
+  // Italian Carpets
+  {
+    id: "it_ca_1",
+    name: "SayRug Italian Designer Rug",
+    price: "£356.00",
+    furnitureType: "carpet",
+    style: "Italian",
+    image: "https://sayrug.co.uk/media/catalog/product/cache/1/image/800x800/9df78eab33525d08d6e5fb8d27136e95/i/t/italian-designer-rug.jpg",
+    store: "SayRug",
+    link: "https://sayrug.co.uk/italian-rugs/"
+  },
+  {
+    id: "it_ca_2",
+    name: "ItaliaHome Luxury Italian Rug",
+    price: "£499.00",
+    furnitureType: "carpet",
+    style: "Italian",
+    image: "https://www.italiahome.co.uk/cdn/shop/products/LuxuryItalianRug.jpg",
+    store: "ItaliaHome",
+    link: "https://www.italiahome.co.uk/collections/italian-luxury-rugs"
+  },
+  {
+    id: "it_ca_3",
+    name: "Design Italy Contemporary Rug",
+    price: "£650.00",
+    furnitureType: "carpet",
+    style: "Italian",
+    image: "https://designitaly.com/cdn/shop/products/ContemporaryRug.jpg",
+    store: "Design Italy",
+    link: "https://designitaly.com/collections/rugs"
+  },
+
+  // Oriental Carpets
+  {
+    id: "or_ca_1",
+    name: "Little-Persia Handmade Oriental Rug",
+    price: "£1,200.00",
+    furnitureType: "carpet",
+    style: "Oriental",
+    image: "https://www.little-persia.com/cdn/shop/products/HandmadeOrientalRug.jpg",
+    store: "Little-Persia",
+    link: "https://www.little-persia.com/"
+  },
+  {
+    id: "or_ca_2",
+    name: "Oriental Rug Merchant Persian Carpet",
+    price: "£950.00",
+    furnitureType: "carpet",
+    style: "Oriental",
+    image: "https://www.theorientalrugshop.co.uk/cdn/shop/products/PersianCarpet.jpg",
+    store: "Oriental Rug Merchant",
+    link: "https://www.theorientalrugshop.co.uk/"
+  },
+  {
+    id: "or_ca_3",
+    name: "Olney Oriental Rugs Traditional Rug",
+    price: "£1,100.00",
+    furnitureType: "carpet",
+    style: "Oriental",
+    image: "https://www.olneyrugs.co.uk/cdn/shop/products/TraditionalRug.jpg",
+    store: "Olney Oriental Rugs",
+    link: "https://www.olneyrugs.co.uk/"
+  }
+
+  // ... additional products as needed
+];
+  
 ];
 
 export const VisualizationResults = ({
