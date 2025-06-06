@@ -34,7 +34,7 @@ const getFurnitureOverlay = (furnitureType: string, style: string): string => {
   return furnitureImages[furnitureType as keyof typeof furnitureImages] || "";
 };
 
-// Mock product data based on selections with real working links
+// Mock product data based on selections with real working links - now returns 3 products minimum
 const getProductsBySelection = (furnitureType: string, style: string): Product[] => {
   const baseProducts = {
     sofa: [
@@ -53,46 +53,118 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         image: "https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/friheten-corner-sofa-bed-with-storage-skiftebo-dark-grey-s79307468/"
+      },
+      {
+        id: "3",
+        name: "EKTORP 3-seat sofa",
+        price: "£325",
+        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&auto=format",
+        store: "IKEA UK",
+        link: "https://www.ikea.com/gb/en/p/ektorp-3-seat-sofa-totebo-light-beige-s59395929/"
       }
     ],
     table: [
       {
-        id: "3",
+        id: "4",
         name: "EKEDALEN Extendable table",
         price: "£180",
         image: "https://images.unsplash.com/photo-1549497538-303791108f95?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK", 
         link: "https://www.ikea.com/gb/en/p/ekedalen-extendable-table-white-00346721/"
+      },
+      {
+        id: "5",
+        name: "HEMNES Coffee table",
+        price: "£120",
+        image: "https://images.unsplash.com/photo-1549497538-303791108f95?w=400&h=300&fit=crop&auto=format",
+        store: "IKEA UK",
+        link: "https://www.ikea.com/gb/en/p/hemnes-coffee-table-white-stain-50394479/"
+      },
+      {
+        id: "6",
+        name: "LUNNARP Coffee table",
+        price: "£90",
+        image: "https://images.unsplash.com/photo-1549497538-303791108f95?w=400&h=300&fit=crop&auto=format",
+        store: "IKEA UK",
+        link: "https://www.ikea.com/gb/en/p/lunnarp-coffee-table-white-30395875/"
       }
     ],
     chair: [
       {
-        id: "4",
+        id: "7",
         name: "TOBIAS Chair",
         price: "£79",
         image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/tobias-chair-clear-chrome-plated-70263847/"
+      },
+      {
+        id: "8",
+        name: "MARKUS Office chair",
+        price: "£180",
+        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&auto=format",
+        store: "IKEA UK",
+        link: "https://www.ikea.com/gb/en/p/markus-office-chair-vissle-dark-grey-70261150/"
+      },
+      {
+        id: "9",
+        name: "ADDE Chair",
+        price: "£25",
+        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&auto=format",
+        store: "IKEA UK",
+        link: "https://www.ikea.com/gb/en/p/adde-chair-white-70103408/"
       }
     ],
     bed: [
       {
-        id: "5",
+        id: "10",
         name: "MALM Bed frame",
         price: "£129", 
         image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/malm-bed-frame-high-white-stained-oak-veneer-s99141591/"
+      },
+      {
+        id: "11",
+        name: "HEMNES Bed frame",
+        price: "£200",
+        image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=400&h=300&fit=crop&auto=format",
+        store: "IKEA UK",
+        link: "https://www.ikea.com/gb/en/p/hemnes-bed-frame-white-stain-s29006287/"
+      },
+      {
+        id: "12",
+        name: "BRIMNES Bed frame",
+        price: "£150",
+        image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=400&h=300&fit=crop&auto=format",
+        store: "IKEA UK",
+        link: "https://www.ikea.com/gb/en/p/brimnes-bed-frame-with-storage-white-s59007108/"
       }
     ],
     carpet: [
       {
-        id: "6",
+        id: "13",
         name: "STOENSE Rug",
         price: "£45",
         image: "https://images.unsplash.com/photo-1541558869434-2840d308329a?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK", 
         link: "https://www.ikea.com/gb/en/p/stoense-rug-low-pile-medium-grey-40438172/"
+      },
+      {
+        id: "14",
+        name: "VINDUM Rug",
+        price: "£120",
+        image: "https://images.unsplash.com/photo-1541558869434-2840d308329a?w=400&h=300&fit=crop&auto=format",
+        store: "IKEA UK",
+        link: "https://www.ikea.com/gb/en/p/vindum-rug-high-pile-white-70344368/"
+      },
+      {
+        id: "15",
+        name: "TYVELSE Rug",
+        price: "£80",
+        image: "https://images.unsplash.com/photo-1541558869434-2840d308329a?w=400&h=300&fit=crop&auto=format",
+        store: "IKEA UK",
+        link: "https://www.ikea.com/gb/en/p/tyvelse-rug-low-pile-off-white-50388522/"
       }
     ]
   };
@@ -160,18 +232,27 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
     // The useEffect above will handle the image processing immediately
   };
 
-  const handleMouseDown = (e: React.MouseEvent) => {
+  // Touch and mouse event handlers for mobile compatibility
+  const getEventPosition = (e: React.MouseEvent | React.TouchEvent) => {
+    if ('touches' in e) {
+      return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    }
+    return { x: e.clientX, y: e.clientY };
+  };
+
+  const handleStart = (e: React.MouseEvent | React.TouchEvent) => {
     if (!containerRef.current) return;
     setIsDragging(true);
     e.preventDefault();
   };
 
-  const handleMouseMove = (e: React.MouseEvent) => {
+  const handleMove = (e: React.MouseEvent | React.TouchEvent) => {
     if (!isDragging || !containerRef.current) return;
     
     const rect = containerRef.current.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    const pos = getEventPosition(e);
+    const x = ((pos.x - rect.left) / rect.width) * 100;
+    const y = ((pos.y - rect.top) / rect.height) * 100;
     
     // Keep furniture within bounds
     const clampedX = Math.max(10, Math.min(90, x));
@@ -180,7 +261,7 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
     setFurniturePosition({ x: clampedX, y: clampedY });
   };
 
-  const handleMouseUp = () => {
+  const handleEnd = () => {
     setIsDragging(false);
   };
 
@@ -215,10 +296,12 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
         <Card className="p-4">
           <div 
             ref={containerRef}
-            className="aspect-video bg-gray-100 rounded-lg overflow-hidden relative cursor-move"
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseUp}
+            className="aspect-video bg-gray-100 rounded-lg overflow-hidden relative cursor-move touch-none"
+            onMouseMove={handleMove}
+            onMouseUp={handleEnd}
+            onMouseLeave={handleEnd}
+            onTouchMove={handleMove}
+            onTouchEnd={handleEnd}
           >
             {/* Original room image */}
             <img 
@@ -249,13 +332,14 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
             {/* Furniture overlay with removed background */}
             {!isProcessing && !error && processedFurnitureImage && (
               <div 
-                className="absolute pointer-events-auto cursor-grab active:cursor-grabbing"
+                className="absolute pointer-events-auto cursor-grab active:cursor-grabbing touch-none"
                 style={{
                   left: `${furniturePosition.x}%`,
                   top: `${furniturePosition.y}%`,
                   transform: 'translate(-50%, -50%)',
                 }}
-                onMouseDown={handleMouseDown}
+                onMouseDown={handleStart}
+                onTouchStart={handleStart}
               >
                 <img 
                   src={processedFurnitureImage}
