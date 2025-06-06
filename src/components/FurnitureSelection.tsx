@@ -13,7 +13,7 @@ interface FurnitureSelectionProps {
 
 const furnitureOptions: { value: FurnitureType; label: string; icon: string }[] = [
   { value: "sofa", label: "Sofa", icon: "🛋️" },
-  { value: "table", label: "Table", icon: "🪑" },
+  { value: "table", label: "Table", icon: "https://img.icons8.com/?size=100&id=AyVcjXrjiYCN&format=png&color=000000" },
   { value: "chair", label: "Chair", icon: "🪑" },
   { value: "bed", label: "Bed", icon: "🛏️" },
   { value: "carpet", label: "Carpet", icon: "🟫" },
@@ -84,7 +84,13 @@ export const FurnitureSelection = ({ roomImage, onSelections, onBack }: Furnitur
                 onClick={() => setSelectedFurniture(option.value)}
               >
                 <div className="text-center space-y-2">
-                  <div className="text-2xl">{option.icon}</div>
+                  <div className="text-2xl flex justify-center">
+                    {option.icon.startsWith('http') ? (
+                      <img src={option.icon} alt={option.label} className="w-8 h-8" />
+                    ) : (
+                      option.icon
+                    )}
+                  </div>
                   <div className="font-medium text-gray-900">{option.label}</div>
                 </div>
               </Card>

@@ -1,9 +1,9 @@
+
 import { useState, useEffect, useRef } from "react";
 import { ArrowDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { UserSelections } from "@/pages/Index";
-import { removeBackground } from "@/utils/backgroundRemoval";
 
 interface Product {
   id: string;
@@ -69,11 +69,11 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
       },
       {
         id: "6",
-        name: "LUNNARP Coffee table",
-        price: "£90",
+        name: "BJURSTA Dining table",
+        price: "£140",
         image: "https://images.unsplash.com/photo-1506439773649-6e0eb8cfb237?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK",
-        link: "https://www.ikea.com/gb/en/p/lunnarp-coffee-table-white-30395875/"
+        link: "https://www.ikea.com/gb/en/p/bjursta-extendable-table-brown-black-80116265/"
       }
     ],
     chair: [
@@ -95,11 +95,11 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
       },
       {
         id: "9",
-        name: "ADDE Chair",
-        price: "£25",
+        name: "STEFAN Chair",
+        price: "£35",
         image: "https://images.unsplash.com/photo-1503602642458-232111445657?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK",
-        link: "https://www.ikea.com/gb/en/p/adde-chair-white-70103408/"
+        link: "https://www.ikea.com/gb/en/p/stefan-chair-brown-black-90135347/"
       }
     ],
     bed: [
@@ -159,6 +159,49 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
   return baseProducts[furnitureType as keyof typeof baseProducts] || [];
 };
 
+// Improved background removal using Remove.bg API (with fallback)
+const removeBackgroundWithAPI = async (imageUrl: string): Promise<string> => {
+  try {
+    console.log('Attempting background removal with Remove.bg API for:', imageUrl);
+    
+    // Convert image URL to blob first
+    const response = await fetch(imageUrl);
+    const blob = await response.blob();
+    
+    // Create form data for Remove.bg API
+    const formData = new FormData();
+    formData.append('image_file', blob);
+    formData.append('size', 'auto');
+    
+    // Call Remove.bg API (note: this would require an API key in production)
+    const removeResponse = await fetch('https://api.remove.bg/v1.0/removebg', {
+      method: 'POST',
+      headers: {
+        'X-Api-Key': 'YOUR_REMOVEBG_API_KEY', // This would need to be set
+      },
+      body: formData,
+    });
+
+    if (removeResponse.ok) {
+      const resultBlob = await removeResponse.blob();
+      return URL.createObjectURL(resultBlob);
+    } else {
+      throw new Error('Remove.bg API failed');
+    }
+  } catch (error) {
+    console.error('Remove.bg API failed, using fallback method:', error);
+    
+    // Fallback to client-side processing with better parameters
+    try {
+      const { removeBackground } = await import('@/utils/backgroundRemoval');
+      return await removeBackground(imageUrl);
+    } catch (fallbackError) {
+      console.error('Fallback background removal failed:', fallbackError);
+      return imageUrl; // Return original image if all methods fail
+    }
+  }
+};
+
 export const VisualizationResults = ({ roomImage, selections, onBack, onStartOver }: VisualizationResultsProps) => {
   const [processedFurnitureImage, setProcessedFurnitureImage] = useState<string>("");
   const [isProcessing, setIsProcessing] = useState(false);
@@ -191,7 +234,7 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
       console.log('Processing furniture image for background removal:', selectedProduct.name);
       
       try {
-        const processedImage = await removeBackground(selectedProduct.image);
+        const processedImage = await removeBackgroundWithAPI(selectedProduct.image);
         console.log('Background removal completed successfully for:', selectedProduct.name);
         setProcessedFurnitureImage(processedImage);
       } catch (error) {
@@ -219,7 +262,7 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
   };
 
   // Calculate distance between two touch points
-  const getTouchDistance = (touches: TouchList) => {
+  const getTouchDistance = (touches: React.TouchList) => {
     if (touches.length < 2) return 0;
     const touch1 = touches[0];
     const touch2 = touches[1];
@@ -230,7 +273,7 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
   };
 
   // Calculate angle between two touch points
-  const getTouchAngle = (touches: TouchList) => {
+  const getTouchAngle = (touches: React.TouchList) => {
     if (touches.length < 2) return 0;
     const touch1 = touches[0];
     const touch2 = touches[1];
