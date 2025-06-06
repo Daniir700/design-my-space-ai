@@ -13,7 +13,7 @@ interface FurnitureSelectionProps {
 
 const furnitureOptions: { value: FurnitureType; label: string; icon: string }[] = [
   { value: "sofa", label: "Sofa", icon: "🛋️" },
-  { value: "table", label: "Table", icon: "☕" },
+  { value: "table", label: "Table", icon: "🍽️" },
   { value: "chair", label: "Chair", icon: "🪑" },
   { value: "bed", label: "Bed", icon: "🛏️" },
   { value: "carpet", label: "Carpet", icon: "🟫" },

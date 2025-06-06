@@ -21,20 +21,7 @@ interface VisualizationResultsProps {
   onStartOver: () => void;
 }
 
-// Mock furniture overlay images based on selections
-const getFurnitureOverlay = (furnitureType: string, style: string): string => {
-  const furnitureImages = {
-    sofa: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&h=300&fit=crop&auto=format",
-    table: "https://images.unsplash.com/photo-1549497538-303791108f95?w=400&h=300&fit=crop&auto=format",
-    chair: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&auto=format",
-    bed: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=400&h=300&fit=crop&auto=format",
-    carpet: "https://images.unsplash.com/photo-1541558869434-2840d308329a?w=400&h=300&fit=crop&auto=format"
-  };
-  
-  return furnitureImages[furnitureType as keyof typeof furnitureImages] || "";
-};
-
-// Mock product data based on selections with real working links - now returns 3 products minimum
+// Mock product data with different furniture images for each product
 const getProductsBySelection = (furnitureType: string, style: string): Product[] => {
   const baseProducts = {
     sofa: [
@@ -58,7 +45,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "3",
         name: "EKTORP 3-seat sofa",
         price: "£325",
-        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&auto=format",
+        image: "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=600&h=400&fit=crop&auto=format&q=80",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/ektorp-3-seat-sofa-totebo-light-beige-s59395929/"
       }
@@ -76,7 +63,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "5",
         name: "HEMNES Coffee table",
         price: "£120",
-        image: "https://images.unsplash.com/photo-1549497538-303791108f95?w=400&h=300&fit=crop&auto=format",
+        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/hemnes-coffee-table-white-stain-50394479/"
       },
@@ -84,7 +71,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "6",
         name: "LUNNARP Coffee table",
         price: "£90",
-        image: "https://images.unsplash.com/photo-1549497538-303791108f95?w=400&h=300&fit=crop&auto=format",
+        image: "https://images.unsplash.com/photo-1549497538-303791108f95?w=600&h=400&fit=crop&auto=format&q=80",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/lunnarp-coffee-table-white-30395875/"
       }
@@ -102,7 +89,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "8",
         name: "MARKUS Office chair",
         price: "£180",
-        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&auto=format",
+        image: "https://images.unsplash.com/photo-1541558869434-2840d308329a?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/markus-office-chair-vissle-dark-grey-70261150/"
       },
@@ -110,7 +97,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "9",
         name: "ADDE Chair",
         price: "£25",
-        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=400&h=300&fit=crop&auto=format",
+        image: "https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=600&h=400&fit=crop&auto=format&q=80",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/adde-chair-white-70103408/"
       }
@@ -128,7 +115,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "11",
         name: "HEMNES Bed frame",
         price: "£200",
-        image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=400&h=300&fit=crop&auto=format",
+        image: "https://images.unsplash.com/photo-1540932239986-30128078f3c5?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/hemnes-bed-frame-white-stain-s29006287/"
       },
@@ -136,7 +123,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "12",
         name: "BRIMNES Bed frame",
         price: "£150",
-        image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=400&h=300&fit=crop&auto=format",
+        image: "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?w=600&h=400&fit=crop&auto=format&q=80",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/brimnes-bed-frame-with-storage-white-s59007108/"
       }
@@ -154,7 +141,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "14",
         name: "VINDUM Rug",
         price: "£120",
-        image: "https://images.unsplash.com/photo-1541558869434-2840d308329a?w=400&h=300&fit=crop&auto=format",
+        image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=300&fit=crop&auto=format",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/vindum-rug-high-pile-white-70344368/"
       },
@@ -162,7 +149,7 @@ const getProductsBySelection = (furnitureType: string, style: string): Product[]
         id: "15",
         name: "TYVELSE Rug",
         price: "£80",
-        image: "https://images.unsplash.com/photo-1541558869434-2840d308329a?w=400&h=300&fit=crop&auto=format",
+        image: "https://images.unsplash.com/photo-1541558869434-2840d308329a?w=600&h=400&fit=crop&auto=format&q=80",
         store: "IKEA UK",
         link: "https://www.ikea.com/gb/en/p/tyvelse-rug-low-pile-off-white-50388522/"
       }
@@ -177,7 +164,7 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
   const [isProcessing, setIsProcessing] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [error, setError] = useState<string>("");
-  const [furniturePosition, setFurniturePosition] = useState({ x: 50, y: 50 }); // Percentage position
+  const [furniturePosition, setFurniturePosition] = useState({ x: 50, y: 50 });
   const [isDragging, setIsDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   
@@ -190,46 +177,38 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
     }
   }, [products, selectedProduct]);
 
-  // Process the initial furniture image or selected product image
+  // Process the selected product image for background removal and overlay
   useEffect(() => {
     const processImage = async () => {
-      let imageToProcess = "";
-      
-      if (selectedProduct) {
-        imageToProcess = selectedProduct.image;
-      } else {
-        imageToProcess = getFurnitureOverlay(selections.furnitureType, selections.style);
-      }
+      if (!selectedProduct) return;
 
-      if (imageToProcess) {
-        setIsProcessing(true);
-        setError("");
-        console.log('Processing furniture image for background removal...');
-        
-        try {
-          const processedImage = await removeBackground(imageToProcess);
-          console.log('Background removal completed successfully');
-          setProcessedFurnitureImage(processedImage);
-        } catch (error) {
-          console.error('Failed to process image:', error);
-          setError('Failed to process image');
-          // Use original image as fallback
-          setProcessedFurnitureImage(imageToProcess);
-        } finally {
-          setIsProcessing(false);
-        }
+      setIsProcessing(true);
+      setError("");
+      console.log('Processing furniture image for background removal:', selectedProduct.name);
+      
+      try {
+        const processedImage = await removeBackground(selectedProduct.image);
+        console.log('Background removal completed successfully for:', selectedProduct.name);
+        setProcessedFurnitureImage(processedImage);
+      } catch (error) {
+        console.error('Failed to process image:', error);
+        setError('Failed to process image');
+        // Use original image as fallback
+        setProcessedFurnitureImage(selectedProduct.image);
+      } finally {
+        setIsProcessing(false);
       }
     };
 
     processImage();
-  }, [selectedProduct, selections.furnitureType, selections.style]);
+  }, [selectedProduct]);
 
-  const handleProductSelect = async (product: Product) => {
-    if (selectedProduct?.id === product.id) return; // Already selected
+  const handleProductSelect = (product: Product) => {
+    if (selectedProduct?.id === product.id) return;
     
     console.log('Product selected:', product.name);
     setSelectedProduct(product);
-    // The useEffect above will handle the image processing immediately
+    // The useEffect above will handle the image processing automatically
   };
 
   // Touch and mouse event handlers for mobile compatibility
@@ -315,7 +294,7 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
               <div className="absolute inset-0 flex items-center justify-center bg-black/50 z-10">
                 <div className="bg-white rounded-lg p-4 flex items-center space-x-3">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-green-600"></div>
-                  <p className="text-sm font-medium">Processing furniture...</p>
+                  <p className="text-sm font-medium">Processing {selectedProduct?.name}...</p>
                 </div>
               </div>
             )}
@@ -330,7 +309,7 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
             )}
             
             {/* Furniture overlay with removed background */}
-            {!isProcessing && !error && processedFurnitureImage && (
+            {!isProcessing && !error && processedFurnitureImage && selectedProduct && (
               <div 
                 className="absolute pointer-events-auto cursor-grab active:cursor-grabbing touch-none"
                 style={{
@@ -343,13 +322,13 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
               >
                 <img 
                   src={processedFurnitureImage}
-                  alt={selectedProduct ? selectedProduct.name : `${selections.style} ${selections.furnitureType}`}
+                  alt={selectedProduct.name}
                   className="max-w-[200px] max-h-[200px] object-contain"
                   style={{
                     filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.3))',
                   }}
                   onError={(e) => {
-                    console.error('Failed to display processed image');
+                    console.error('Failed to display processed image for:', selectedProduct.name);
                     setError('Failed to display furniture image');
                   }}
                   draggable={false}
@@ -364,7 +343,7 @@ export const VisualizationResults = ({ roomImage, selections, onBack, onStartOve
               </div>
             </div>
             
-            {/* Style and furniture type indicator */}
+            {/* Current product name indicator */}
             <div className="absolute bottom-4 left-4 z-20">
               <div className="bg-black/70 backdrop-blur-sm rounded-lg px-3 py-2">
                 <p className="text-sm font-medium text-white">
