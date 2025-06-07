@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -486,20 +485,18 @@ export const VisualizationResults = ({
       for (const product of products) {
         try {
           console.log('Processing background removal for:', product.name);
-          // Create an image element from the URL
-          const img = new Image();
-          img.crossOrigin = 'anonymous';
           
-          await new Promise((resolve, reject) => {
-            img.onload = resolve;
-            img.onerror = reject;
-            img.src = product.image;
-          });
+          // Fetch the image as a blob first
+          const response = await fetch(product.image);
+          const imageBlob = await response.blob();
           
-          // Use browser-based background removal
-          const imageBlob = await fetch(product.image).then(r => r.blob());
+          // Load the image element from the blob
           const imageElement = await loadImage(imageBlob);
+          
+          // Remove background and get the processed blob
           const processedBlob = await removeBackground(imageElement);
+          
+          // Create URL from the processed blob
           updated[product.id] = URL.createObjectURL(processedBlob);
           console.log('Background removed for product:', product.id);
         } catch (error) {
