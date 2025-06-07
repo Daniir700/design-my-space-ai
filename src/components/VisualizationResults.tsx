@@ -1,269 +1,827 @@
-
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Draggable from "react-draggable";
+import { UserSelections } from "@/pages/Index";
 
 interface Product {
-  furnitureType: string;
-  style: string;
+  id: string;
   name: string;
   image: string;
-  link: string;
-  store: string;
+  style: string;
+  furnitureType: string;
   price: string;
+  store: string;
+  link: string;
 }
 
 interface VisualizationResultsProps {
   roomImage: string;
-  furnitureType: string;
-  style: string;
-}
-
-// VisualizationResults.tsx
-
-import React from 'react';
-
-interface Product {
-  name: string;
-  image: string;
-  style: string;
-  type: string;
-  price: string;
-  store: string;
-  link: string;
+  selections: UserSelections;
+  onBack: () => void;
+  onStartOver: () => void;
 }
 
 const CATALOGUE: Product[] = [
+  // Italian Sofas
+  {
+    id: "it_s1",
+    name: "Milano 3 Seater Sofa",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982/v1/catalog/product/asset/SOFMIL031GRY_UK_FRONT.png",
+    style: "italian",
+    furnitureType: "sofa",
+    price: "£1,299",
+    store: "Made.com",
+    link: "https://www.made.com/milano-3-seater-sofa-sterling-grey"
+  },
+  {
+    id: "it_s2", 
+    name: "Pisa Corner Sofa",
+    image: "https://www.dfs.co.uk/dfsie/content/images/catalog/PIS0000000000052677/large/dfs-pisa-fabric-corner-sofa-mink.jpg",
+    style: "italian",
+    furnitureType: "sofa",
+    price: "£1,899",
+    store: "DFS",
+    link: "https://www.dfs.co.uk/pisa"
+  },
+  {
+    id: "it_s3",
+    name: "Verona Leather Sofa",
+    image: "https://www.furniturevillage.co.uk/images/verona-3-seater-sofa-tan-leather.jpg",
+    style: "italian",
+    furnitureType: "sofa", 
+    price: "£2,199",
+    store: "Furniture Village",
+    link: "https://www.furniturevillage.co.uk/sofas/leather-sofas"
+  },
+
   // Minimalistic Sofas
   {
-    name: "Sienna 3 Seater Sofa",
-    image: "https://www.scs.co.uk/productimages/large/si3s.jpg",
-    style: "Minimalistic",
-    type: "sofa",
-    price: "£799",
-    store: "ScS",
-    link: "https://www.scs.co.uk/sienna-3-seater-sofa/si3s",
+    id: "min_s1",
+    name: "KIVIK 3-seat sofa",
+    image: "https://www.ikea.com/gb/en/images/products/kivik-3-seat-sofa-hillared-dark-blue__0603016_pe681506_s5.jpg",
+    style: "minimalistic",
+    furnitureType: "sofa",
+    price: "£450",
+    store: "IKEA",
+    link: "https://www.ikea.com/gb/en/p/kivik-3-seat-sofa-hillared-dark-blue-s29307176/"
   },
   {
-    name: "Marion Modern Sofa",
-    image: "https://moderndesignsofas.co.uk/images/marion-sofa.jpg",
-    style: "Minimalistic",
-    type: "sofa",
-    price: "£779",
-    store: "Modern Design Sofas",
-    link: "https://moderndesignsofas.co.uk/marion-modern-sofa",
+    id: "min_s2",
+    name: "Zara 3 Seater Sofa",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982/v1/catalog/product/asset/SOFZAR003GRY_UK_FRONT.png",
+    style: "minimalistic", 
+    furnitureType: "sofa",
+    price: "£999",
+    store: "Made.com",
+    link: "https://www.made.com/zara-3-seater-sofa-sterling-grey"
   },
   {
-    name: "Amsterdam 3 Seater Sofa",
-    image: "https://www.wayfair.co.uk/images/amsterdam-sofa.jpg",
-    style: "Minimalistic",
-    type: "sofa",
-    price: "£699",
+    id: "min_s3",
+    name: "Oslo 3 Seater Sofa",
+    image: "https://www.heals.com/media/catalog/product/o/s/oslo-3-seater-sofa-grey_1.jpg",
+    style: "minimalistic",
+    furnitureType: "sofa",
+    price: "£1,199",
+    store: "Heals",
+    link: "https://www.heals.com/oslo-3-seater-sofa.html"
+  },
+
+  // Oriental Sofas
+  {
+    id: "or_s1",
+    name: "Kyoto 3 Seater Sofa",
+    image: "https://cdn.swooneditions.com/images/v1/product-images/SOFKYO003TAN_1.jpg",
+    style: "oriental",
+    furnitureType: "sofa",
+    price: "£1,399",
+    store: "Swoon Editions", 
+    link: "https://swooneditions.com/kyoto-3-seater-sofa"
+  },
+  {
+    id: "or_s2",
+    name: "Bamboo Style Sofa",
+    image: "https://www.habitat.co.uk/media/catalog/product/b/a/bamboo-3-seater-sofa_1.jpg",
+    style: "oriental",
+    furnitureType: "sofa",
+    price: "£899",
+    store: "Habitat",
+    link: "https://www.habitat.co.uk/sofas"
+  },
+  {
+    id: "or_s3",
+    name: "Zen 3 Seater Sofa",
+    image: "https://www.wayfair.co.uk/furniture/pdp/zen-3-seater-sofa-wfuk1234.html",
+    style: "oriental",
+    furnitureType: "sofa",
+    price: "£1,099",
     store: "Wayfair UK",
-    link: "https://www.wayfair.co.uk/furniture/pdp/amsterdam-3-seater-sofa-wf123456.html",
+    link: "https://www.wayfair.co.uk/furniture/sb0/sofas-c215386.html"
   },
 
   // Classic Sofas
   {
-    name: "Arlington Traditional Sofa",
-    image: "https://www.theenglishsofacompany.co.uk/images/arlington-sofa.jpg",
-    style: "Classic",
-    type: "sofa",
-    price: "£1,450",
-    store: "The English Sofa Company",
-    link: "https://www.theenglishsofacompany.co.uk/fabric-sofas/arlington-traditional-sofa/",
-  },
-  {
-    name: "Chesterfield Leather Sofa",
-    image: "https://www.dfs.co.uk/images/chesterfield-sofa.jpg",
-    style: "Classic",
-    type: "sofa",
-    price: "£1,199",
+    id: "cl_s1",
+    name: "Chesterfield 3 Seater",
+    image: "https://www.dfs.co.uk/dfsie/content/images/catalog/CHE0000000000052677/large/dfs-chesterfield-leather-sofa-tan.jpg",
+    style: "classic",
+    furnitureType: "sofa",
+    price: "£1,799",
     store: "DFS",
-    link: "https://www.dfs.co.uk/chesterfield-leather-sofa/df123456",
+    link: "https://www.dfs.co.uk/chesterfield"
   },
   {
-    name: "Cambridge Scroll Arm Sofa",
-    image: "https://www.furniturevillage.co.uk/images/cambridge-sofa.jpg",
-    style: "Classic",
-    type: "sofa",
-    price: "£1,299",
-    store: "Furniture Village",
-    link: "https://www.furniturevillage.co.uk/cambridge-scroll-arm-sofa/fv123456",
+    id: "cl_s2",
+    name: "Hampton 3 Seater Sofa",
+    image: "https://www.johnlewis.com/content/dam/jl-customer-images/hampton-3-seater-sofa.jpg",
+    style: "classic",
+    furnitureType: "sofa",
+    price: "£1,499",
+    store: "John Lewis",
+    link: "https://www.johnlewis.com/browse/home-garden/furniture/sofas/_/N-bvr"
+  },
+  {
+    id: "cl_s3",
+    name: "Kensington 3 Seater",
+    image: "https://www.cotswoldco.com/media/catalog/product/k/e/kensington-3-seater-sofa_1.jpg",
+    style: "classic",
+    furnitureType: "sofa",
+    price: "£1,899",
+    store: "Cotswold Co",
+    link: "https://www.cotswoldco.com/furniture/sofas"
   },
 
-  // Scandinavian Sofas
+  // Modern Sofas
   {
-    name: "Eider Corner Sofa",
-    image: "https://uk.privatefloor.com/images/eider-sofa.jpg",
-    style: "Scandinavian",
-    type: "sofa",
+    id: "mod_s1",
+    name: "Flynn 3 Seater Sofa",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982/v1/catalog/product/asset/SOFFLN003GRY_UK_FRONT.png",
+    style: "modern",
+    furnitureType: "sofa",
+    price: "£1,199",
+    store: "Made.com",
+    link: "https://www.made.com/flynn-3-seater-sofa"
+  },
+  {
+    id: "mod_s2",
+    name: "Nova 3 Seater Sofa",
+    image: "https://www.wayfair.co.uk/furniture/pdp/nova-3-seater-sofa-modern-grey.html",
+    style: "modern",
+    furnitureType: "sofa",
     price: "£899",
-    store: "Private Floor",
-    link: "https://uk.privatefloor.com/catalog/product/scandinavian-style-corner-sofa-eider-912/",
+    store: "Wayfair UK",
+    link: "https://www.wayfair.co.uk/furniture/sb0/modern-sofas-c215386.html"
   },
   {
-    name: "Fuuga 3 Seater Sofa",
-    image: "https://slf24.co.uk/images/fuuga-sofa.jpg",
-    style: "Scandinavian",
-    type: "sofa",
-    price: "£799",
-    store: "SLF24",
-    link: "https://slf24.co.uk/fuuga-3-seater-sofa.html",
+    id: "mod_s3",
+    name: "Atlas 3 Seater Sofa",
+    image: "https://www.heals.com/media/catalog/product/a/t/atlas-3-seater-sofa-charcoal_1.jpg",
+    style: "modern",
+    furnitureType: "sofa",
+    price: "£1,399",
+    store: "Heals",
+    link: "https://www.heals.com/sofas"
+  },
+
+  // Italian Tables
+  {
+    id: "it_t1",
+    name: "Venezia Dining Table",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982/v1/catalog/product/asset/TABVEN006WAL_UK_FRONT.png",
+    style: "italian",
+    furnitureType: "table",
+    price: "£899",
+    store: "Made.com",
+    link: "https://www.made.com/venezia-6-seat-dining-table"
   },
   {
-    name: "Nordic 3 Seater Sofa",
-    image: "https://www.johnlewis.com/images/nordic-sofa.jpg",
-    style: "Scandinavian",
-    type: "sofa",
-    price: "£850",
-    store: "John Lewis & Partners",
-    link: "https://www.johnlewis.com/nordic-3-seater-sofa/p1234567",
+    id: "it_t2",
+    name: "Tuscany Oak Table",
+    image: "https://www.furniturevillage.co.uk/images/tuscany-dining-table-oak.jpg",
+    style: "italian",
+    furnitureType: "table",
+    price: "£1,299",
+    store: "Furniture Village",
+    link: "https://www.furniturevillage.co.uk/dining-room/dining-tables"
+  },
+  {
+    id: "it_t3",
+    name: "Roma Marble Table",
+    image: "https://www.heals.com/media/catalog/product/r/o/roma-marble-dining-table_1.jpg",
+    style: "italian",
+    furnitureType: "table",
+    price: "£1,799",
+    store: "Heals",
+    link: "https://www.heals.com/dining-tables"
   },
 
   // Minimalistic Tables
   {
-    name: "Minimalist Oak Dining Table",
-    image: "https://www.eatsleeplive.co.uk/images/minimalist-oak-table.jpg",
-    style: "Minimalistic",
-    type: "table",
-    price: "£840",
-    store: "Eat Sleep Live",
-    link: "https://www.eatsleeplive.co.uk/collections/minimalist-tables/products/minimalist-oak-dining-table",
+    id: "min_t1",
+    name: "LISABO Table",
+    image: "https://www.ikea.com/gb/en/images/products/lisabo-table-ash-veneer__0737092_pe740877_s5.jpg",
+    style: "minimalistic",
+    furnitureType: "table",
+    price: "£180",
+    store: "IKEA",
+    link: "https://www.ikea.com/gb/en/p/lisabo-table-ash-veneer-40297952/"
   },
   {
-    name: "Modern Glass Coffee Table",
-    image: "https://www.wayfair.co.uk/images/modern-glass-table.jpg",
-    style: "Minimalistic",
-    type: "table",
-    price: "£299",
+    id: "min_t2",
+    name: "Endo 6 Seat Table",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982/v1/catalog/product/asset/TABEND006OAK_UK_FRONT.png",
+    style: "minimalistic",
+    furnitureType: "table",
+    price: "£699",
+    store: "Made.com",
+    link: "https://www.made.com/endo-6-seat-dining-table"
+  },
+  {
+    id: "min_t3",
+    name: "Oslo Dining Table",
+    image: "https://www.heals.com/media/catalog/product/o/s/oslo-dining-table-white_1.jpg",
+    style: "minimalistic",
+    furnitureType: "table",
+    price: "£899",
+    store: "Heals",
+    link: "https://www.heals.com/oslo-dining-table.html"
+  },
+
+  // Oriental Tables  
+  {
+    id: "or_t1",
+    name: "Kyoto Dining Table",
+    image: "https://cdn.swooneditions.com/images/v1/product-images/TABKYO006WAL_1.jpg",
+    style: "oriental",
+    furnitureType: "table",
+    price: "£1,199",
+    store: "Swoon Editions",
+    link: "https://swooneditions.com/kyoto-6-seat-dining-table"
+  },
+  {
+    id: "or_t2",
+    name: "Bamboo Dining Table",
+    image: "https://www.habitat.co.uk/media/catalog/product/b/a/bamboo-dining-table_1.jpg",
+    style: "oriental",
+    furnitureType: "table",
+    price: "£799",
+    store: "Habitat",
+    link: "https://www.habitat.co.uk/dining-room/dining-tables"
+  },
+  {
+    id: "or_t3",
+    name: "Zen Dining Table",
+    image: "https://www.wayfair.co.uk/furniture/pdp/zen-dining-table-natural-wood.html",
+    style: "oriental",
+    furnitureType: "table",
+    price: "£999",
     store: "Wayfair UK",
-    link: "https://www.wayfair.co.uk/furniture/pdp/modern-glass-coffee-table-wf123456.html",
-  },
-  {
-    name: "White Minimalist Desk",
-    image: "https://www.ikea.com/gb/en/images/products/white-minimalist-desk.jpg",
-    style: "Minimalistic",
-    type: "table",
-    price: "£150",
-    store: "IKEA UK",
-    link: "https://www.ikea.com/gb/en/p/white-minimalist-desk-12345678/",
+    link: "https://www.wayfair.co.uk/furniture/sb0/dining-tables-c215728.html"
   },
 
   // Classic Tables
   {
-    name: "Hudson Dining Table",
-    image: "https://www.eatsleeplive.co.uk/images/hudson-table.jpg",
-    style: "Classic",
-    type: "table",
-    price: "£1,030",
-    store: "Eat Sleep Live",
-    link: "https://www.eatsleeplive.co.uk/collections/classic-tables/products/hudson-dining-table",
+    id: "cl_t1",
+    name: "Henley Dining Table",
+    image: "https://www.johnlewis.com/content/dam/jl-customer-images/henley-dining-table.jpg",
+    style: "classic",
+    furnitureType: "table",
+    price: "£1,399",
+    store: "John Lewis",
+    link: "https://www.johnlewis.com/browse/home-garden/furniture/dining-room/_/N-bvs"
   },
   {
-    name: "Cherry Grove Extendable Table",
-    image: "https://colemanfurniture.com/images/cherry-grove-table.jpg",
-    style: "Classic",
-    type: "table",
-    price: "£1,200",
-    store: "Coleman Furniture",
-    link: "https://colemanfurniture.com/cherry-grove-classic-antique-extendable-cherry-pedestal-dining-table.htm",
+    id: "cl_t2",
+    name: "Windsor Oak Table",
+    image: "https://www.cotswoldco.com/media/catalog/product/w/i/windsor-oak-dining-table_1.jpg",
+    style: "classic",
+    furnitureType: "table",
+    price: "£1,599",
+    store: "Cotswold Co",
+    link: "https://www.cotswoldco.com/furniture/dining-tables"
   },
   {
-    name: "Classic Round Dining Table",
-    image: "https://www.furniturechoice.co.uk/images/classic-round-table.jpg",
-    style: "Classic",
-    type: "table",
-    price: "£499",
-    store: "Furniture Choice",
-    link: "https://www.furniturechoice.co.uk/dining-room-furniture/dining-tables-and-chairs/f/style/traditional/",
+    id: "cl_t3",
+    name: "Heritage Dining Table",
+    image: "https://www.furniturevillage.co.uk/images/heritage-oak-dining-table.jpg",
+    style: "classic",
+    furnitureType: "table",
+    price: "£1,799",
+    store: "Furniture Village",
+    link: "https://www.furniturevillage.co.uk/dining-room/dining-tables"
   },
 
-  // Scandinavian Tables
+  // Modern Tables
   {
-    name: "Norgaard Extension Dining Table",
-    image: "https://scandinaviandesigns.com/images/norgaard-table.jpg",
-    style: "Scandinavian",
-    type: "table",
+    id: "mod_t1",
+    name: "Apex 6 Seat Table",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982/v1/catalog/product/asset/TABAPE006BLK_UK_FRONT.png",
+    style: "modern",
+    furnitureType: "table",
+    price: "£999",
+    store: "Made.com",
+    link: "https://www.made.com/apex-6-seat-dining-table"
+  },
+  {
+    id: "mod_t2",
+    name: "Linear Dining Table",
+    image: "https://www.heals.com/media/catalog/product/l/i/linear-dining-table-walnut_1.jpg",
+    style: "modern",
+    furnitureType: "table",
+    price: "£1,199",
+    store: "Heals",
+    link: "https://www.heals.com/linear-dining-table.html"
+  },
+  {
+    id: "mod_t3",
+    name: "Nova Glass Table",
+    image: "https://www.wayfair.co.uk/furniture/pdp/nova-glass-dining-table-modern.html",
+    style: "modern",
+    furnitureType: "table",
+    price: "£799",
+    store: "Wayfair UK",
+    link: "https://www.wayfair.co.uk/furniture/sb0/glass-dining-tables-c215728.html"
+  },
+
+  // Italian Chairs
+  {
+    id: "it_c1",
+    name: "Milano Dining Chair",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982/v1/catalog/product/asset/CHMIL001TAN_UK_FRONT.png",
+    style: "italian",
+    furnitureType: "chair",
+    price: "£199",
+    store: "Made.com",
+    link: "https://www.made.com/milano-dining-chair"
+  },
+  {
+    id: "it_c2",
+    name: "Pisa Leather Chair",
+    image: "https://www.furniturevillage.co.uk/images/pisa-leather-dining-chair.jpg",
+    style: "italian",
+    furnitureType: "chair",
+    price: "£299",
+    store: "Furniture Village",
+    link: "https://www.furniturevillage.co.uk/dining-room/dining-chairs"
+  },
+  {
+    id: "it_c3",
+    name: "Verona Chair",
+    image: "https://www.heals.com/media/catalog/product/v/e/verona-dining-chair-tan_1.jpg",
+    style: "italian",
+    furnitureType: "chair",
+    price: "£249",
+    store: "Heals",
+    link: "https://www.heals.com/dining-chairs"
+  },
+
+  // Minimalistic Chairs
+  {
+    id: "min_c1",
+    name: "ODGER Chair",
+    image: "https://www.ikea.com/gb/en/images/products/odger-chair-blue-green__0727320_pe735593_s5.jpg",
+    style: "minimalistic",
+    furnitureType: "chair",
+    price: "£70",
+    store: "IKEA",
+    link: "https://www.ikea.com/gb/en/p/odger-chair-blue-green-70335228/"
+  },
+  {
+    id: "min_c2",
+    name: "Rae Dining Chair",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982/v1/catalog/product/asset/CHRAE001GRY_UK_FRONT.png",
+    style: "minimalistic",
+    furnitureType: "chair",
+    price: "£149",
+    store: "Made.com",
+    link: "https://www.made.com/rae-dining-chair"
+  },
+  {
+    id: "min_c3",
+    name: "Oslo Chair",
+    image: "https://www.heals.com/media/catalog/product/o/s/oslo-chair-white_1.jpg",
+    style: "minimalistic",
+    furnitureType: "chair",
+    price: "£199",
+    store: "Heals",
+    link: "https://www.heals.com/oslo-chair.html"
+  },
+
+  // Oriental Chairs
+  {
+    id: "or_c1",
+    name: "Kyoto Dining Chair",
+    image: "https://cdn.swooneditions.com/images/v1/product-images/CHKYO001NAT_1.jpg",
+    style: "oriental",
+    furnitureType: "chair",
+    price: "£179",
+    store: "Swoon Editions",
+    link: "https://swooneditions.com/kyoto-dining-chair"
+  },
+  {
+    id: "or_c2",
+    name: "Bamboo Chair",
+    image: "https://www.habitat.co.uk/media/catalog/product/b/a/bamboo-dining-chair_1.jpg",
+    style: "oriental",
+    furnitureType: "chair",
+    price: "£129",
+    store: "Habitat",
+    link: "https://www.habitat.co.uk/dining-room/dining-chairs"
+  },
+  {
+    id: "or_c3",
+    name: "Zen Chair",
+    image: "https://www.wayfair.co.uk/furniture/pdp/zen-dining-chair-natural.html",
+    style: "oriental",
+    furnitureType: "chair",
+    price: "£159",
+    store: "Wayfair UK",
+    link: "https://www.wayfair.co.uk/furniture/sb0/dining-chairs-c215485.html"
+  },
+
+  // Classic Chairs
+  {
+    id: "cl_c1",
+    name: "Windsor Chair",
+    image: "https://www.johnlewis.com/content/dam/jl-customer-images/windsor-dining-chair.jpg",
+    style: "classic",
+    furnitureType: "chair",
+    price: "£229",
+    store: "John Lewis",
+    link: "https://www.johnlewis.com/browse/home-garden/furniture/dining-room/_/N-bvs"
+  },
+  {
+    id: "cl_c2",
+    name: "Heritage Oak Chair",
+    image: "https://www.cotswoldco.com/media/catalog/product/h/e/heritage-oak-chair_1.jpg",
+    style: "classic",
+    furnitureType: "chair",
+    price: "£279",
+    store: "Cotswold Co",
+    link: "https://www.cotswoldco.com/furniture/dining-chairs"
+  },
+  {
+    id: "cl_c3",
+    name: "Traditional Chair",
+    image: "https://www.furniturevillage.co.uk/images/traditional-dining-chair.jpg",
+    style: "classic",
+    furnitureType: "chair",
+    price: "£299",
+    store: "Furniture Village",
+    link: "https://www.furniturevillage.co.uk/dining-room/dining-chairs"
+  },
+
+  // Modern Chairs
+  {
+    id: "mod_c1",
+    name: "Flynn Dining Chair",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982/v1/catalog/product/asset/CHFLN001GRY_UK_FRONT.png",
+    style: "modern",
+    furnitureType: "chair",
+    price: "£179",
+    store: "Made.com",
+    link: "https://www.made.com/flynn-dining-chair"
+  },
+  {
+    id: "mod_c2",
+    name: "Linear Chair",
+    image: "https://www.heals.com/media/catalog/product/l/i/linear-chair-charcoal_1.jpg",
+    style: "modern",
+    furnitureType: "chair",
+    price: "£219",
+    store: "Heals",
+    link: "https://www.heals.com/linear-chair.html"
+  },
+  {
+    id: "mod_c3",
+    name: "Nova Chair",
+    image: "https://www.wayfair.co.uk/furniture/pdp/nova-modern-chair-grey.html",
+    style: "modern",
+    furnitureType: "chair",
+    price: "£189",
+    store: "Wayfair UK",
+    link: "https://www.wayfair.co.uk/furniture/sb0/modern-dining-chairs-c215485.html"
+  },
+
+  // Italian Beds
+  {
+    id: "it_b1",
+    name: "Milano King Bed",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982/v1/catalog/product/asset/BEDMIL005TAN_UK_FRONT.png",
+    style: "italian",
+    furnitureType: "bed",
+    price: "£1,299",
+    store: "Made.com",
+    link: "https://www.made.com/milano-king-size-bed"
+  },
+  {
+    id: "it_b2",
+    name: "Pisa Leather Bed",
+    image: "https://www.furniturevillage.co.uk/images/pisa-leather-king-bed.jpg",
+    style: "italian",
+    furnitureType: "bed",
+    price: "£1,599",
+    store: "Furniture Village",
+    link: "https://www.furniturevillage.co.uk/bedroom/beds"
+  },
+  {
+    id: "it_b3",
+    name: "Verona Upholstered Bed",
+    image: "https://www.heals.com/media/catalog/product/v/e/verona-king-bed-grey_1.jpg",
+    style: "italian",
+    furnitureType: "bed",
+    price: "£1,799",
+    store: "Heals",
+    link: "https://www.heals.com/beds"
+  },
+
+  // Minimalistic Beds
+  {
+    id: "min_b1",
+    name: "MALM Bed frame",
+    image: "https://www.ikea.com/gb/en/images/products/malm-bed-frame-white__0637519_pe698355_s5.jpg",
+    style: "minimalistic",
+    furnitureType: "bed",
+    price: "£179",
+    store: "IKEA",
+    link: "https://www.ikea.com/gb/en/p/malm-bed-frame-white-s59009475/"
+  },
+  {
+    id: "min_b2",
+    name: "Rae King Bed",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982/v1/catalog/product/asset/BEDRAE005GRY_UK_FRONT.png",
+    style: "minimalistic",
+    furnitureType: "bed",
     price: "£899",
-    store: "Scandinavian Designs",
-    link: "https://scandinaviandesigns.com/products/norgaard-extension-dining-table",
+    store: "Made.com",
+    link: "https://www.made.com/rae-king-size-bed"
   },
   {
-    name: "Skandi Oak Dining Table",
-    image: "https://olsonbaker.com/images/skandi-table.jpg",
-    style: "Scandinavian",
-    type: "table",
-    price: "£950",
-    store: "Olson and Baker",
-    link: "https://olsonbaker.com/product-tag/scandinavian-dining-tables/",
+    id: "min_b3",
+    name: "Oslo Platform Bed",
+    image: "https://www.heals.com/media/catalog/product/o/s/oslo-platform-bed-white_1.jpg",
+    style: "minimalistic",
+    furnitureType: "bed",
+    price: "£1,199",
+    store: "Heals",
+    link: "https://www.heals.com/oslo-platform-bed.html"
+  },
+
+  // Oriental Beds
+  {
+    id: "or_b1",
+    name: "Kyoto Platform Bed",
+    image: "https://cdn.swooneditions.com/images/v1/product-images/BEDKYO005NAT_1.jpg",
+    style: "oriental",
+    furnitureType: "bed",
+    price: "£1,199",
+    store: "Swoon Editions",
+    link: "https://swooneditions.com/kyoto-platform-bed"
   },
   {
-    name: "Light Scandinavian Dining Table",
-    image: "https://www.grainandframe.com/images/light-scandinavian-table.jpg",
-    style: "Scandinavian",
-    type: "table",
-    price: "£1,100",
-    store: "Grain and Frame",
-    link: "https://www.grainandframe.com/kitchen-and-dining-sets/extendable-light-scandinavian-dining-set/",
+    id: "or_b2",
+    name: "Bamboo Bed Frame",
+    image: "https://www.habitat.co.uk/media/catalog/product/b/a/bamboo-bed-frame_1.jpg",
+    style: "oriental",
+    furnitureType: "bed",
+    price: "£899",
+    store: "Habitat",
+    link: "https://www.habitat.co.uk/bedroom/beds"
+  },
+  {
+    id: "or_b3",
+    name: "Zen Platform Bed",
+    image: "https://www.wayfair.co.uk/furniture/pdp/zen-platform-bed-natural.html",
+    style: "oriental",
+    furnitureType: "bed",
+    price: "£999",
+    store: "Wayfair UK",
+    link: "https://www.wayfair.co.uk/furniture/sb0/beds-c215356.html"
+  },
+
+  // Classic Beds
+  {
+    id: "cl_b1",
+    name: "Windsor Sleigh Bed",
+    image: "https://www.johnlewis.com/content/dam/jl-customer-images/windsor-sleigh-bed.jpg",
+    style: "classic",
+    furnitureType: "bed",
+    price: "£1,399",
+    store: "John Lewis",
+    link: "https://www.johnlewis.com/browse/home-garden/furniture/bedroom/_/N-bvt"
+  },
+  {
+    id: "cl_b2",
+    name: "Heritage Oak Bed",
+    image: "https://www.cotswoldco.com/media/catalog/product/h/e/heritage-oak-bed_1.jpg",
+    style: "classic",
+    furnitureType: "bed",
+    price: "£1,599",
+    store: "Cotswold Co",
+    link: "https://www.cotswoldco.com/furniture/beds"
+  },
+  {
+    id: "cl_b3",
+    name: "Traditional Panel Bed",
+    image: "https://www.furniturevillage.co.uk/images/traditional-panel-bed.jpg",
+    style: "classic",
+    furnitureType: "bed",
+    price: "£1,799",
+    store: "Furniture Village",
+    link: "https://www.furniturevillage.co.uk/bedroom/beds"
+  },
+
+  // Modern Beds
+  {
+    id: "mod_b1",
+    name: "Flynn Platform Bed",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982/v1/catalog/product/asset/BEDFLN005GRY_UK_FRONT.png",
+    style: "modern",
+    furnitureType: "bed",
+    price: "£1,199",
+    store: "Made.com",
+    link: "https://www.made.com/flynn-platform-bed"
+  },
+  {
+    id: "mod_b2",
+    name: "Linear Upholstered Bed",
+    image: "https://www.heals.com/media/catalog/product/l/i/linear-upholstered-bed-charcoal_1.jpg",
+    style: "modern",
+    furnitureType: "bed",
+    price: "£1,399",
+    store: "Heals",
+    link: "https://www.heals.com/linear-upholstered-bed.html"
+  },
+  {
+    id: "mod_b3",
+    name: "Nova King Bed",
+    image: "https://www.wayfair.co.uk/furniture/pdp/nova-modern-king-bed.html",
+    style: "modern",
+    furnitureType: "bed",
+    price: "£999",
+    store: "Wayfair UK",
+    link: "https://www.wayfair.co.uk/furniture/sb0/modern-beds-c215356.html"
+  },
+
+  // Italian Carpets
+  {
+    id: "it_r1",
+    name: "Milano Persian Rug",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982/v1/catalog/product/asset/RUGMIL200RED_UK_FRONT.png",
+    style: "italian",
+    furnitureType: "carpet",
+    price: "£399",
+    store: "Made.com",
+    link: "https://www.made.com/milano-persian-rug"
+  },
+  {
+    id: "it_r2",
+    name: "Venetian Silk Rug",
+    image: "https://www.heals.com/media/catalog/product/v/e/venetian-silk-rug_1.jpg",
+    style: "italian",
+    furnitureType: "carpet",
+    price: "£899",
+    store: "Heals",
+    link: "https://www.heals.com/rugs"
+  },
+  {
+    id: "it_r3",
+    name: "Tuscany Wool Rug",
+    image: "https://www.johnlewis.com/content/dam/jl-customer-images/tuscany-wool-rug.jpg",
+    style: "italian",
+    furnitureType: "carpet",
+    price: "£599",
+    store: "John Lewis",
+    link: "https://www.johnlewis.com/browse/home-garden/home-accessories/rugs/_/N-bwa"
   },
 
   // Minimalistic Carpets
   {
-    name: "Beige Minimalist Rug",
-    image: "https://www.designhunter.co.uk/images/beige-minimalist-rug.jpg",
-    style: "Minimalistic",
-    type: "carpet",
-    price: "£250",
-    store: "Design Hunter",
-    link: "https://www.designhunter.co.uk/10-of-the-best-modern-minimalist-rugs/",
+    id: "min_r1",
+    name: "STOCKHOLM Rug",
+    image: "https://www.ikea.com/gb/en/images/products/stockholm-rug-flatwoven-handmade-stripe-grey__0607179_pe681771_s5.jpg",
+    style: "minimalistic",
+    furnitureType: "carpet",
+    price: "£149",
+    store: "IKEA",
+    link: "https://www.ikea.com/gb/en/p/stockholm-rug-flatwoven-handmade-stripe-grey-50397246/"
   },
   {
-    name: "Grey Geometric Rug",
-    image: "https://ruggable.co.uk/images/grey-geometric-rug.jpg",
-    style: "Minimalistic",
-    type: "carpet",
-    price: "£199",
-    store: "Ruggable UK",
-    link: "https://ruggable.co.uk/collections/minimalist-rugs",
+    id: "min_r2",
+    name: "Rae Geometric Rug",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982/v1/catalog/product/asset/RUGRAE200GRY_UK_FRONT.png",
+    style: "minimalistic",
+    furnitureType: "carpet",
+    price: "£299",
+    store: "Made.com",
+    link: "https://www.made.com/rae-geometric-rug"
   },
   {
-    name: "Striped Area Rug",
-    image: "https://www.amazon.co.uk/images/striped-area-rug.jpg",
-    style: "Minimalistic",
-    type: "carpet",
-    price: "£89",
-    store: "Amazon UK",
-    link: "https://www.amazon.co.uk/minimalist-rug/s?k=minimalist+rug",
+    id: "min_r3",
+    name: "Oslo Minimal Rug",
+    image: "https://www.heals.com/media/catalog/product/o/s/oslo-minimal-rug-cream_1.jpg",
+    style: "minimalistic",
+    furnitureType: "carpet",
+    price: "£399",
+    store: "Heals",
+    link: "https://www.heals.com/oslo-minimal-rug.html"
+  },
+
+  // Oriental Carpets
+  {
+    id: "or_r1",
+    name: "Kyoto Tatami Rug",
+    image: "https://cdn.swooneditions.com/images/v1/product-images/RUGKYO200NAT_1.jpg",
+    style: "oriental",
+    furnitureType: "carpet",
+    price: "£499",
+    store: "Swoon Editions",
+    link: "https://swooneditions.com/kyoto-tatami-rug"
+  },
+  {
+    id: "or_r2",
+    name: "Bamboo Weave Rug",
+    image: "https://www.habitat.co.uk/media/catalog/product/b/a/bamboo-weave-rug_1.jpg",
+    style: "oriental",
+    furnitureType: "carpet",
+    price: "£299",
+    store: "Habitat",
+    link: "https://www.habitat.co.uk/home-accessories/rugs"
+  },
+  {
+    id: "or_r3",
+    name: "Zen Garden Rug",
+    image: "https://www.wayfair.co.uk/decor-pillows/pdp/zen-garden-rug-natural.html",
+    style: "oriental",
+    furnitureType: "carpet",
+    price: "£399",
+    store: "Wayfair UK",
+    link: "https://www.wayfair.co.uk/decor-pillows/sb0/rugs-c215386.html"
   },
 
   // Classic Carpets
   {
-    name: "Classic Persian Rug",
-    image: "https://www.oramaworld.com/images/classic-persian-rug.jpg",
-    style: "Classic",
-    type: "carpet",
-    price: "£1,800",
-    store: "OramaWorld",
-    link: "https://www.oramaworld.com/en/p/300664/Classic_Ecclesiastical_Carpet_Lydia_A487C",
+    id: "cl_r1",
+    name: "Windsor Traditional Rug",
+    image: "https://www.johnlewis.com/content/dam/jl-customer-images/windsor-traditional-rug.jpg",
+    style: "classic",
+    furnitureType: "carpet",
+    price: "£699",
+    store: "John Lewis",
+    link: "https://www.johnlewis.com/browse/home-garden/home-accessories/rugs/_/N-bwa"
   },
   {
-    name: "Traditional Floral Carpet",
-    image: "https://classiccarpet.co.uk/images/traditional-floral-carpet.jpg",
-    style: "Classic",
-    type: "carpet",
-    price: "£1,200",
-    store: "Classic Carpet Company",
-    link: "https://classiccarpet.co.uk/",
+    id: "cl_r2",
+    name: "Heritage Persian Rug",
+    image: "https://www.cotswoldco.com/media/catalog/product/h/e/heritage-persian-rug_1.jpg",
+    style: "classic",
+    furnitureType: "carpet",
+    price: "£899",
+    store: "Cotswold Co",
+    link: "https://www.cotswoldco.com/home-accessories/rugs"
   },
   {
-    name: "Red Oriental Rug",
-    image: "https://classiccarpetsportsmouth.co.uk/images/red-oriental-rug.jpg",
-    style: "Classic",
-    type: "carpet",
-    price: "£1, 
-  // Additional items should be added here...
+    id: "cl_r3",
+    name: "Traditional Wool Rug",
+    image: "https://www.furniturevillage.co.uk/images/traditional-wool-rug.jpg",
+    style: "classic",
+    furnitureType: "carpet",
+    price: "£799",
+    store: "Furniture Village",
+    link: "https://www.furniturevillage.co.uk/home-accessories/rugs"
+  },
+
+  // Modern Carpets
+  {
+    id: "mod_r1",
+    name: "Flynn Abstract Rug",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982/v1/catalog/product/asset/RUGFLN200GRY_UK_FRONT.png",
+    style: "modern",
+    furnitureType: "carpet",
+    price: "£399",
+    store: "Made.com",
+    link: "https://www.made.com/flynn-abstract-rug"
+  },
+  {
+    id: "mod_r2",
+    name: "Linear Contemporary Rug",
+    image: "https://www.heals.com/media/catalog/product/l/i/linear-contemporary-rug_1.jpg",
+    style: "modern",
+    furnitureType: "carpet",
+    price: "£599",
+    store: "Heals",
+    link: "https://www.heals.com/linear-contemporary-rug.html"
+  },
+  {
+    id: "mod_r3",
+    name: "Nova Modern Rug",
+    image: "https://www.wayfair.co.uk/decor-pillows/pdp/nova-modern-rug-grey.html",
+    style: "modern",
+    furnitureType: "carpet",
+    price: "£499",
+    store: "Wayfair UK",
+    link: "https://www.wayfair.co.uk/decor-pillows/sb0/modern-rugs-c215386.html"
+  }
 ];
 
 async function removeBackgroundPixian(imageUrl: string): Promise<string> {
@@ -285,7 +843,7 @@ async function removeBackgroundPixian(imageUrl: string): Promise<string> {
   return URL.createObjectURL(cleanedBlob);
 }
 
-export default function VisualizationResults({ roomImage, furnitureType, style }: VisualizationResultsProps) {
+export default function VisualizationResults({ roomImage, selections, onBack, onStartOver }: VisualizationResultsProps) {
   const [results, setResults] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [processedImages, setProcessedImages] = useState<string[]>([]);
@@ -293,11 +851,11 @@ export default function VisualizationResults({ roomImage, furnitureType, style }
   useEffect(() => {
     const filtered = CATALOGUE.filter(
       (item) =>
-        item.furnitureType.toLowerCase() === furnitureType.toLowerCase() &&
-        item.style.toLowerCase() === style.toLowerCase()
+        item.furnitureType.toLowerCase() === selections.furnitureType.toLowerCase() &&
+        item.style.toLowerCase() === selections.style.toLowerCase()
     );
     setResults(filtered);
-  }, [furnitureType, style]);
+  }, [selections.furnitureType, selections.style]);
 
   useEffect(() => {
     const processImages = async () => {
