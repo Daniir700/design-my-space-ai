@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -26,231 +25,191 @@ interface VisualizationResultsProps {
 const REMOVE_BG_API_KEY = "msBHY5X91Ur2PB4AoaL1pgzD";
 
 const CATALOGUE: Product[] = [
+  // Italian Chairs
   {
-    id: "c1", name: "Italian Leather Chair", price: "£199", furnitureType: "chair", style: "Italian",
-    image: "https://www.ikea.com/gb/en/images/products/remsta-armchair-gunnared-beige__1042527_pe841199_s5.png",
+    id: "it_c1", name: "IKEA REMSTA Armchair", price: "£199", furnitureType: "chair", style: "italian",
+    image: "https://www.ikea.com/gb/en/images/products/remsta-armchair-gunnared-beige__1042527_pe841199_s5.jpg",
     store: "IKEA UK", link: "https://www.ikea.com/gb/en/p/remsta-armchair-gunnared-beige-20493547/"
   },
   {
-    id: "c2", name: "Classic Italian Lounge", price: "£349", furnitureType: "chair", style: "Italian",
-    image: "https://www.ikea.com/gb/en/images/products/strandmon-wing-chair-skiftebo-dark-grey__0710183_pe727379_s5.png",
+    id: "it_c2", name: "IKEA STRANDMON Wing Chair", price: "£349", furnitureType: "chair", style: "italian",
+    image: "https://www.ikea.com/gb/en/images/products/strandmon-wing-chair-skiftebo-dark-grey__0710183_pe727379_s5.jpg",
     store: "IKEA UK", link: "https://www.ikea.com/gb/en/p/strandmon-wing-chair-skiftebo-dark-grey-70359827/"
   },
   {
-    id: "c3", name: "Minimalist Armchair", price: "£129", furnitureType: "chair", style: "Minimalistic",
-    image: "https://www.ikea.com/gb/en/images/products/poaeng-armchair-birch-veneer-knisa-light-beige__1008460_pe827354_s5.png",
+    id: "it_c3", name: "Made Margot Accent Chair", price: "£449", furnitureType: "chair", style: "italian",
+    image: "https://img.made.com/image/upload/c_pad,d_madex_photogrey.svg,f_auto,w_982,h_654/v1/catalogue/product/furniture/seating/armchairs/CHRMAR007NEU_UK/Margot_Accent_Chair_Sage_Green_Velvet_angle.png",
+    store: "Made.com", link: "https://www.made.com/margot-accent-chair-sage-green-velvet"
+  },
+
+  // Minimalistic Chairs
+  {
+    id: "mi_c1", name: "IKEA POÄNG Armchair", price: "£129", furnitureType: "chair", style: "minimalistic",
+    image: "https://www.ikea.com/gb/en/images/products/poaeng-armchair-birch-veneer-knisa-light-beige__1008460_pe827354_s5.jpg",
     store: "IKEA UK", link: "https://www.ikea.com/gb/en/p/poaeng-armchair-birch-veneer-knisa-light-beige-70362447/"
   },
   {
-    id: "c4", name: "Scandinavian Lounge Chair", price: "£159", furnitureType: "chair", style: "Scandinavian",
-    image: "https://www.ikea.com/gb/en/images/products/froset-armchair-birch-veneer-katorp-natural__1152555_pe885926_s5.png",
-    store: "IKEA UK", link: "https://www.ikea.com/gb/en/p/froset-armchair-birch-veneer-katorp-natural-40516499/"
+    id: "mi_c2", name: "IKEA VEDBO Armchair", price: "£179", furnitureType: "chair", style: "minimalistic",
+    image: "https://www.ikea.com/gb/en/images/products/vedbo-armchair-gunnared-beige__0873514_pe720311_s5.jpg",
+    store: "IKEA UK", link: "https://www.ikea.com/gb/en/p/vedbo-armchair-gunnared-beige-60461839/"
   },
   {
-    id: "s1", name: "Minimalist Sofa 2-Seater", price: "£279", furnitureType: "sofa", style: "Minimalistic",
-    image: "https://www.ikea.com/gb/en/images/products/klippan-2-seat-sofa-vissle-grey__0910187_pe787996_s5.png",
+    id: "mi_c3", name: "Habitat Eve Chair", price: "£250", furnitureType: "chair", style: "minimalistic",
+    image: "https://images.habitat.co.uk/is/image/Habitat/198806_1?$PRODUCT_LISTING$",
+    store: "Habitat", link: "https://www.habitat.co.uk/eve-chair-198806"
+  },
+
+  // Oriental Chairs
+  {
+    id: "or_c1", name: "John Lewis Ming Chair", price: "£599", furnitureType: "chair", style: "oriental",
+    image: "https://johnlewis.scene7.com/is/image/JohnLewis/238027195?$rsp-pdp-port-640$",
+    store: "John Lewis", link: "https://www.johnlewis.com/ming-chair-dark-wood/p238027195"
+  },
+  {
+    id: "or_c2", name: "Swoon Orient Chair", price: "£459", furnitureType: "chair", style: "oriental",
+    image: "https://cdn.swooneditions.com/images/v1/product-images/CHROR01BLA_1.jpg",
+    store: "Swoon Editions", link: "https://swooneditions.com/orient-chair-black"
+  },
+  {
+    id: "or_c3", name: "Heals Kyoto Armchair", price: "£899", furnitureType: "chair", style: "oriental",
+    image: "https://www.heals.com/media/catalog/product/k/y/kyoto-armchair-black-walnut_1.jpg",
+    store: "Heals", link: "https://www.heals.com/kyoto-armchair-black-walnut.html"
+  },
+
+  // Classic Chairs
+  {
+    id: "cl_c1", name: "Cotswold Windsor Chair", price: "£399", furnitureType: "chair", style: "classic",
+    image: "https://www.cotswoldco.com/media/catalog/product/c/h/chair-windsor-oak_1.jpg",
+    store: "Cotswold Co", link: "https://www.cotswoldco.com/windsor-chair-oak"
+  },
+  {
+    id: "cl_c2", name: "Furniture Village Chesterfield Chair", price: "£699", furnitureType: "chair", style: "classic",
+    image: "https://images.furniturevillage.co.uk/f_auto,t_product_large/v1567757364/catalog/sofas-chairs/1031/1031_hero_chair_chesterfield_dark_brown.jpg",
+    store: "Furniture Village", link: "https://www.furniturevillage.co.uk/chesterfield-chair"
+  },
+  {
+    id: "cl_c3", name: "DFS Cambridge Chair", price: "£549", furnitureType: "chair", style: "classic",
+    image: "https://images.dfs.co.uk/i/dfs/cambridge_chair_brown_leather?$large$",
+    store: "DFS", link: "https://www.dfs.co.uk/cambridge-chair"
+  },
+
+  // Modern Chairs
+  {
+    id: "mo_c1", name: "Made Ziggy Swivel Chair", price: "£329", furnitureType: "chair", style: "modern",
+    image: "https://img.made.com/image/upload/c_pad,d_madex_photogrey.svg,f_auto,w_982,h_654/v1/catalogue/product/furniture/seating/armchairs/CHRZIG001BLU_UK/Ziggy_Swivel_Chair_Royal_Blue_Velvet_angle.png",
+    store: "Made.com", link: "https://www.made.com/ziggy-swivel-chair-royal-blue-velvet"
+  },
+  {
+    id: "mo_c2", name: "Wayfair Penelope Chair", price: "£279", furnitureType: "chair", style: "modern",
+    image: "https://secure.img1-fg.wfcdn.com/im/30359482/resize-h800-w800%5Ecompr-r85/1396/139622901/penelope-armchair.jpg",
+    store: "Wayfair UK", link: "https://www.wayfair.co.uk/furniture/pdp/penelope-armchair-BNRS2071.html"
+  },
+  {
+    id: "mo_c3", name: "Habitat Storm Chair", price: "£395", furnitureType: "chair", style: "modern",
+    image: "https://images.habitat.co.uk/is/image/Habitat/197445_1?$PRODUCT_LISTING$",
+    store: "Habitat", link: "https://www.habitat.co.uk/storm-chair-197445"
+  },
+
+  // Italian Sofas
+  {
+    id: "it_s1", name: "Made Romano 3 Seater Sofa", price: "£1299", furnitureType: "sofa", style: "italian",
+    image: "https://img.made.com/image/upload/c_pad,d_madex_photogrey.svg,f_auto,w_982,h_654/v1/catalogue/product/furniture/seating/sofas/SOFROM006NAV_UK/Romano_3_Seater_Sofa_Navy_Blue_Velvet_angle.png",
+    store: "Made.com", link: "https://www.made.com/romano-3-seater-sofa-navy-blue-velvet"
+  },
+  {
+    id: "it_s2", name: "DFS Bella Italia Sofa", price: "£1599", furnitureType: "sofa", style: "italian",
+    image: "https://images.dfs.co.uk/i/dfs/bella_italia_3_seater_sofa_brown_leather?$large$",
+    store: "DFS", link: "https://www.dfs.co.uk/bella-italia-3-seater-sofa"
+  },
+  {
+    id: "it_s3", name: "Furniture Village Milano Sofa", price: "£1899", furnitureType: "sofa", style: "italian",
+    image: "https://images.furniturevillage.co.uk/f_auto,t_product_large/v1567757364/catalog/sofas-chairs/milano/milano_hero_sofa_cream_leather.jpg",
+    store: "Furniture Village", link: "https://www.furniturevillage.co.uk/milano-sofa"
+  },
+
+  // Minimalistic Sofas
+  {
+    id: "mi_s1", name: "IKEA KLIPPAN 2-seat Sofa", price: "£279", furnitureType: "sofa", style: "minimalistic",
+    image: "https://www.ikea.com/gb/en/images/products/klippan-2-seat-sofa-vissle-grey__0910187_pe787996_s5.jpg",
     store: "IKEA UK", link: "https://www.ikea.com/gb/en/p/klippan-2-seat-sofa-vissle-grey-40392519/"
   },
   {
-    id: "s2", name: "Scandinavian 3-Seater", price: "£379", furnitureType: "sofa", style: "Scandinavian",
-    image: "https://www.ikea.com/gb/en/images/products/friheten-corner-sofa-bed-with-storage-skiftebo-dark-grey__0635986_pe697395_s5.png",
-    store: "IKEA UK", link: "https://www.ikea.com/gb/en/p/friheten-corner-sofa-bed-with-storage-skiftebo-dark-grey-90431763/"
+    id: "mi_s2", name: "IKEA SODERHAMN 3-seat Sofa", price: "£495", furnitureType: "sofa", style: "minimalistic",
+    image: "https://www.ikea.com/gb/en/images/products/soederhamn-3-seat-sofa-viarp-beige-brown__0978715_pe814328_s5.jpg",
+    store: "IKEA UK", link: "https://www.ikea.com/gb/en/p/soederhamn-3-seat-sofa-viarp-beige-brown-s49305151/"
   },
   {
-    id: "s3", name: "Italian Velvet Sofa", price: "£459", furnitureType: "sofa", style: "Italian",
-    image: "https://www.ikea.com/gb/en/images/products/landskrona-3-seat-sofa-gunnared-blue__0857516_pe780769_s5.png",
-    store: "IKEA UK", link: "https://www.ikea.com/gb/en/p/landskrona-3-seat-sofa-gunnared-blue-60413550/"
+    id: "mi_s3", name: "Made Tubby 2 Seater Sofa", price: "£649", furnitureType: "sofa", style: "minimalistic",
+    image: "https://img.made.com/image/upload/c_pad,d_madex_photogrey.svg,f_auto,w_982,h_654/v1/catalogue/product/furniture/seating/sofas/SOFTUB002CHA_UK/Tubby_2_Seater_Sofa_Charcoal_Grey_angle.png",
+    store: "Made.com", link: "https://www.made.com/tubby-2-seater-sofa-charcoal-grey"
+  },
+
+  // Tables - Italian
+  {
+    id: "it_t1", name: "Made Dante Dining Table", price: "£899", furnitureType: "table", style: "italian",
+    image: "https://img.made.com/image/upload/c_pad,d_madex_photogrey.svg,f_auto,w_982,h_654/v1/catalogue/product/furniture/dining/dining-tables/TABDAN001WAL_UK/Dante_Dining_Table_Walnut_angle.png",
+    store: "Made.com", link: "https://www.made.com/dante-dining-table-walnut"
   },
   {
-    id: "s4", name: "Modern Compact Sofa", price: "£199", furnitureType: "sofa", style: "Minimalistic",
-    image: "https://www.ikea.com/gb/en/images/products/lycksele-lovas-2-seat-sofa-bed-lycksele-gra__0187025_pe338383_s5.png",
-    store: "IKEA UK", link: "https://www.ikea.com/gb/en/p/lycksele-lovas-2-seat-sofa-bed-lycksele-gra-s69290299/"
-  },
-  // Minimalistic Tables
-  {
-    id: "mi_tb_1",
-    name: "Ebern Designs Lift-Top Storage Coffee Table",
-    price: "£68.99",
-    furnitureType: "table",
-    style: "Minimalistic",
-    image: "https://secure.img1-fg.wfcdn.com/im/79954654/resize-h445-w445%5Ecompr-r85/2461/246113778/default_name.jpg",
-    store: "Wayfair UK",
-    link: "https://www.wayfair.co.uk/furniture/pdp/ebern-designs-lift-top-storage-coffee-table-u001146215.html"
+    id: "it_t2", name: "John Lewis Carrara Marble Table", price: "£1299", furnitureType: "table", style: "italian",
+    image: "https://johnlewis.scene7.com/is/image/JohnLewis/238520948?$rsp-pdp-port-640$",
+    store: "John Lewis", link: "https://www.johnlewis.com/carrara-marble-dining-table/p238520948"
   },
   {
-    id: "mi_tb_2",
-    name: "Ivy Bronx Chalsea Coffee Table with Storage",
-    price: "£205.99",
-    furnitureType: "table",
-    style: "Minimalistic",
-    image: "https://secure.img1-fg.wfcdn.com/im/84937117/resize-h445-w445%5Ecompr-r85/2461/246113778/default_name.jpg",
-    store: "Wayfair UK",
-    link: "https://www.wayfair.co.uk/furniture/pdp/ivy-bronx-chalsea-coffee-table-with-storage-u001146215.html"
+    id: "it_t3", name: "Heals Milano Oak Table", price: "£1599", furnitureType: "table", style: "italian",
+    image: "https://www.heals.com/media/catalog/product/m/i/milano-oak-dining-table_1.jpg",
+    store: "Heals", link: "https://www.heals.com/milano-oak-dining-table.html"
+  },
+
+  // Tables - Minimalistic
+  {
+    id: "mi_t1", name: "IKEA LISABO Table", price: "£149", furnitureType: "table", style: "minimalistic",
+    image: "https://www.ikea.com/gb/en/images/products/lisabo-table-ash-veneer__0737092_pe740877_s5.jpg",
+    store: "IKEA UK", link: "https://www.ikea.com/gb/en/p/lisabo-table-ash-veneer-70297479/"
   },
   {
-    id: "mi_tb_3",
-    name: "Cloud Modern Irregular Indoor Tea Table",
-    price: "£213.12",
-    furnitureType: "table",
-    style: "Minimalistic",
-    image: "https://m.media-amazon.com/images/I/61tFzJ5V2pL._AC_SL1500_.jpg",
-    store: "Amazon UK",
-    link: "https://www.amazon.co.uk/dp/B0C7K5X7YF"
-  },
-  // Italian Tables
-  {
-    id: "it_tb_1",
-    name: "Arredoclassic Romantica Italian Dining Table",
-    price: "£864.00",
-    furnitureType: "table",
-    style: "Italian",
-    image: "https://www.furnituredirectuk.net/media/catalog/product/cache/1/image/800x800/9df78eab33525d08d6e5fb8d27136e95/a/r/arredoclassic_romantica_italian_fixed_top_pedestal_base_rectangular_dining_table_only.jpg",
-    store: "Furniture Direct UK",
-    link: "https://www.furnituredirectuk.net/arredoclassic-romantica-italian-fixed-top-pedestal-base-rectangular-dining-table-only.html"
+    id: "mi_t2", name: "Habitat Kilo Dining Table", price: "£350", furnitureType: "table", style: "minimalistic",
+    image: "https://images.habitat.co.uk/is/image/Habitat/195628_1?$PRODUCT_LISTING$",
+    store: "Habitat", link: "https://www.habitat.co.uk/kilo-dining-table-195628"
   },
   {
-    id: "it_tb_2",
-    name: "Viadurini Modern Dining Table in Knotted Oak",
-    price: "£1,525.51",
-    furnitureType: "table",
-    style: "Italian",
-    image: "https://www.viadurini.co.uk/media/catalog/product/cache/1/image/800x800/9df78eab33525d08d6e5fb8d27136e95/m/o/modern-table-in-knotted-oak-wood-made-in-italy-zerba.jpg",
-    store: "Viadurini",
-    link: "https://www.viadurini.co.uk/modern-table-in-knotted-oak-wood-made-in-italy-zerba"
+    id: "mi_t3", name: "Wayfair Karla Table", price: "£289", furnitureType: "table", style: "minimalistic",
+    image: "https://secure.img1-fg.wfcdn.com/im/30359482/resize-h800-w800%5Ecompr-r85/1396/139622901/karla-dining-table.jpg",
+    store: "Wayfair UK", link: "https://www.wayfair.co.uk/furniture/pdp/karla-dining-table-BNRS2072.html"
+  },
+
+  // Carpets - Italian
+  {
+    id: "it_ca1", name: "Made Fara Italian Rug", price: "£249", furnitureType: "carpet", style: "italian",
+    image: "https://img.made.com/image/upload/c_pad,d_madex_photogrey.svg,f_auto,w_982,h_654/v1/catalogue/product/home/rugs/large-rugs/RUGFAR001RED_UK/Fara_Large_Rug_Red_angle.png",
+    store: "Made.com", link: "https://www.made.com/fara-large-rug-red"
   },
   {
-    id: "it_tb_3",
-    name: "Cassoni Acco Table by Miniforms",
-    price: "£4,756.00",
-    furnitureType: "table",
-    style: "Italian",
-    image: "https://cassoni.com/wp-content/uploads/2021/04/Acco-Table.jpg",
-    store: "Cassoni",
-    link: "https://cassoni.com/product/acco-table/"
-  },
-  // Oriental Tables
-  {
-    id: "or_tb_1",
-    name: "Marrakesch Oriental Folding Side Table",
-    price: "£49.69",
-    furnitureType: "table",
-    style: "Oriental",
-    image: "https://m.media-amazon.com/images/I/71ZqON9a1FL._AC_SL1500_.jpg",
-    store: "Amazon UK",
-    link: "https://www.amazon.co.uk/dp/B07Y5VJ8L5"
+    id: "it_ca2", name: "John Lewis Venetian Rug", price: "£399", furnitureType: "carpet", style: "italian",
+    image: "https://johnlewis.scene7.com/is/image/JohnLewis/238027195?$rsp-pdp-port-640$",
+    store: "John Lewis", link: "https://www.johnlewis.com/venetian-rug/p238027195"
   },
   {
-    id: "or_tb_2",
-    name: "Shimu Chinese Antique Side Table",
-    price: "£495.00",
-    furnitureType: "table",
-    style: "Oriental",
-    image: "https://www.shimu.co.uk/wp-content/uploads/2021/06/CT09N-600x600.jpg",
-    store: "Shimu",
-    link: "https://www.shimu.co.uk/product/chinese-antique-side-table/"
+    id: "it_ca3", name: "Heals Palazzo Rug", price: "£599", furnitureType: "carpet", style: "italian",
+    image: "https://www.heals.com/media/catalog/product/p/a/palazzo-rug-cream_1.jpg",
+    store: "Heals", link: "https://www.heals.com/palazzo-rug-cream.html"
+  },
+
+  // Carpets - Minimalistic
+  {
+    id: "mi_ca1", name: "IKEA STOENSE Rug", price: "£85", furnitureType: "carpet", style: "minimalistic",
+    image: "https://www.ikea.com/gb/en/images/products/stoense-rug-low-pile-medium-grey__0607144_pe683061_s5.jpg",
+    store: "IKEA UK", link: "https://www.ikea.com/gb/en/p/stoense-rug-low-pile-medium-grey-00308791/"
   },
   {
-    id: "or_tb_3",
-    name: "Orchid Chinese Console Table",
-    price: "£1,195.00",
-    furnitureType: "table",
-    style: "Oriental",
-    image: "https://www.orchidfurniture.co.uk/wp-content/uploads/2019/06/CHC-01-1.jpg",
-    store: "Orchid Furniture",
-    link: "https://www.orchidfurniture.co.uk/product/chinese-console-table/"
-  },
-  // Minimalistic Carpets
-  {
-    id: "mi_ca_1",
-    name: "Next Mid Natural Minimalist Block Rug",
-    price: "£50.00",
-    furnitureType: "carpet",
-    style: "Minimalistic",
-    image: "https://media.next.co.uk/i/Next/936-312s",
-    store: "Next",
-    link: "https://www.next.co.uk/style/st936312"
+    id: "mi_ca2", name: "Habitat Harper Rug", price: "£149", furnitureType: "carpet", style: "minimalistic",
+    image: "https://images.habitat.co.uk/is/image/Habitat/197563_1?$PRODUCT_LISTING$",
+    store: "Habitat", link: "https://www.habitat.co.uk/harper-rug-197563"
   },
   {
-    id: "mi_ca_2",
-    name: "Ruggable Minimalist Rug",
-    price: "£129.00",
-    furnitureType: "carpet",
-    style: "Minimalistic",
-    image: "https://ruggable.co.uk/cdn/shop/products/MinimalistRug.jpg",
-    store: "Ruggable UK",
-    link: "https://ruggable.co.uk/collections/minimalist-rugs"
-  },
-  {
-    id: "mi_ca_3",
-    name: "Rugette Minimalist Solid Colour Rug",
-    price: "£99.00",
-    furnitureType: "carpet",
-    style: "Minimalistic",
-    image: "https://rugette.co.uk/cdn/shop/products/SolidColourRug.jpg",
-    store: "Rugette",
-    link: "https://rugette.co.uk/collections/minimalist-rugs"
-  },
-  // Italian Carpets
-  {
-    id: "it_ca_1",
-    name: "SayRug Italian Designer Rug",
-    price: "£356.00",
-    furnitureType: "carpet",
-    style: "Italian",
-    image: "https://sayrug.co.uk/media/catalog/product/cache/1/image/800x800/9df78eab33525d08d6e5fb8d27136e95/i/t/italian-designer-rug.jpg",
-    store: "SayRug",
-    link: "https://sayrug.co.uk/italian-rugs/"
-  },
-  {
-    id: "it_ca_2",
-    name: "ItaliaHome Luxury Italian Rug",
-    price: "£499.00",
-    furnitureType: "carpet",
-    style: "Italian",
-    image: "https://www.italiahome.co.uk/cdn/shop/products/LuxuryItalianRug.jpg",
-    store: "ItaliaHome",
-    link: "https://www.italiahome.co.uk/collections/italian-luxury-rugs"
-  },
-  {
-    id: "it_ca_3",
-    name: "Design Italy Contemporary Rug",
-    price: "£650.00",
-    furnitureType: "carpet",
-    style: "Italian",
-    image: "https://designitaly.com/cdn/shop/products/ContemporaryRug.jpg",
-    store: "Design Italy",
-    link: "https://designitaly.com/collections/rugs"
-  },
-  // Oriental Carpets
-  {
-    id: "or_ca_1",
-    name: "Little-Persia Handmade Oriental Rug",
-    price: "£1,200.00",
-    furnitureType: "carpet",
-    style: "Oriental",
-    image: "https://www.little-persia.com/cdn/shop/products/HandmadeOrientalRug.jpg",
-    store: "Little-Persia",
-    link: "https://www.little-persia.com/"
-  },
-  {
-    id: "or_ca_2",
-    name: "Oriental Rug Merchant Persian Carpet",
-    price: "£950.00",
-    furnitureType: "carpet",
-    style: "Oriental",
-    image: "https://www.theorientalrugshop.co.uk/cdn/shop/products/PersianCarpet.jpg",
-    store: "Oriental Rug Merchant",
-    link: "https://www.theorientalrugshop.co.uk/"
-  },
-  {
-    id: "or_ca_3",
-    name: "Olney Oriental Rugs Traditional Rug",
-    price: "£1,100.00",
-    furnitureType: "carpet",
-    style: "Oriental",
-    image: "https://www.olneyrugs.co.uk/cdn/shop/products/TraditionalRug.jpg",
-    store: "Olney Oriental Rugs",
-    link: "https://www.olneyrugs.co.uk/"
+    id: "mi_ca3", name: "Made Loma Rug", price: "£199", furnitureType: "carpet", style: "minimalistic",
+    image: "https://img.made.com/image/upload/c_pad,d_madex_photogrey.svg,f_auto,w_982,h_654/v1/catalogue/product/home/rugs/large-rugs/RUGLOM001BEI_UK/Loma_Large_Rug_Beige_angle.png",
+    store: "Made.com", link: "https://www.made.com/loma-large-rug-beige"
   }
 ];
 
@@ -263,9 +222,11 @@ export const VisualizationResults = ({
   const [rotations, setRotations] = useState<{ [id: string]: number }>({});
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
+  // Fix case sensitivity issue by converting to lowercase for comparison
   const products = CATALOGUE.filter(p =>
-    p.furnitureType === selections.furnitureType && p.style === selections.style
-  ).slice(0, 3); // Ensure we only show 3 options
+    p.furnitureType.toLowerCase() === selections.furnitureType.toLowerCase() && 
+    p.style.toLowerCase() === selections.style.toLowerCase()
+  ).slice(0, 3);
 
   console.log('VisualizationResults - selections:', selections);
   console.log('VisualizationResults - filtered products:', products);
