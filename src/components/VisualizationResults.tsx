@@ -267,9 +267,14 @@ export const VisualizationResults = ({
     p.furnitureType === selections.furnitureType && p.style === selections.style
   ).slice(0, 3); // Ensure we only show 3 options
 
+  console.log('VisualizationResults - selections:', selections);
+  console.log('VisualizationResults - filtered products:', products);
+  console.log('VisualizationResults - selectedProduct:', selectedProduct);
+
   useEffect(() => {
     // Set the first product as selected by default
     if (products.length > 0 && !selectedProduct) {
+      console.log('Setting first product as selected:', products[0]);
       setSelectedProduct(products[0]);
     }
   }, [products, selectedProduct]);
@@ -277,6 +282,7 @@ export const VisualizationResults = ({
   useEffect(() => {
     let active = true;
     const loadImages = async () => {
+      console.log('Starting to load images for products:', products.length);
       const updated: { [id: string]: string } = {};
       for (const product of products) {
         try {
@@ -287,16 +293,26 @@ export const VisualizationResults = ({
           });
           const blob = await response.blob();
           updated[product.id] = URL.createObjectURL(blob);
-        } catch {
+          console.log('Background removed for product:', product.id);
+        } catch (error) {
+          console.log('Failed to remove background for product:', product.id, error);
           updated[product.id] = product.image;
         }
       }
       if (active) {
         setCleanedImages(updated);
         setLoading(false);
+        console.log('All images loaded, loading set to false');
       }
     };
-    loadImages();
+    
+    if (products.length > 0) {
+      loadImages();
+    } else {
+      setLoading(false);
+      console.log('No products found, setting loading to false');
+    }
+    
     return () => { active = false; };
   }, [products]);
 
@@ -332,6 +348,23 @@ export const VisualizationResults = ({
     const newRotation = (rotations[id] || 0) + 90;
     setRotations(prev => ({ ...prev, [id]: newRotation % 360 }));
   };
+
+  if (products.length === 0) {
+    return (
+      <div className="p-4 space-y-4">
+        <div className="text-center py-8">
+          <h3 className="text-lg font-semibold text-gray-600">
+            No furniture found for {selections.style} {selections.furnitureType}
+          </h3>
+          <p className="text-gray-500 mt-2">Please try a different combination.</p>
+        </div>
+        <div className="flex justify-between mt-6">
+          <Button onClick={onBack} variant="outline">Back</Button>
+          <Button onClick={onStartOver} variant="destructive">Start Over</Button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="p-4 space-y-4">
