@@ -1,8 +1,10 @@
+
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { UserSelections } from "@/pages/Index";
 import Draggable from "react-draggable";
+import { removeBackground, loadImage } from "@/utils/backgroundRemoval";
 
 interface Product {
   id: string;
@@ -21,8 +23,6 @@ interface VisualizationResultsProps {
   onBack: () => void;
   onStartOver: () => void;
 }
-
-const REMOVE_BG_API_KEY = "msBHY5X91Ur2PB4AoaL1pgzD";
 
 const CATALOGUE: Product[] = [
   // Italian Chairs
@@ -144,6 +144,57 @@ const CATALOGUE: Product[] = [
     store: "Made.com", link: "https://www.made.com/tubby-2-seater-sofa-charcoal-grey"
   },
 
+  // Oriental Sofas
+  {
+    id: "or_s1", name: "John Lewis Kyoto Sofa", price: "£1199", furnitureType: "sofa", style: "oriental",
+    image: "https://johnlewis.scene7.com/is/image/JohnLewis/238520945?$rsp-pdp-port-640$",
+    store: "John Lewis", link: "https://www.johnlewis.com/kyoto-sofa/p238520945"
+  },
+  {
+    id: "or_s2", name: "Swoon Hanoi Sofa", price: "£1349", furnitureType: "sofa", style: "oriental",
+    image: "https://cdn.swooneditions.com/images/v1/product-images/SOFHAN003NAV_1.jpg",
+    store: "Swoon Editions", link: "https://swooneditions.com/hanoi-sofa-navy"
+  },
+  {
+    id: "or_s3", name: "Heals Oriental Style Sofa", price: "£1599", furnitureType: "sofa", style: "oriental",
+    image: "https://www.heals.com/media/catalog/product/o/r/oriental-style-sofa_1.jpg",
+    store: "Heals", link: "https://www.heals.com/oriental-style-sofa.html"
+  },
+
+  // Classic Sofas
+  {
+    id: "cl_s1", name: "Cotswold Chesterfield Sofa", price: "£1499", furnitureType: "sofa", style: "classic",
+    image: "https://www.cotswoldco.com/media/catalog/product/c/h/chesterfield-sofa-brown_1.jpg",
+    store: "Cotswold Co", link: "https://www.cotswoldco.com/chesterfield-sofa-brown"
+  },
+  {
+    id: "cl_s2", name: "DFS Heritage Sofa", price: "£1299", furnitureType: "sofa", style: "classic",
+    image: "https://images.dfs.co.uk/i/dfs/heritage_sofa_brown_leather?$large$",
+    store: "DFS", link: "https://www.dfs.co.uk/heritage-sofa"
+  },
+  {
+    id: "cl_s3", name: "Furniture Village Classic Sofa", price: "£1699", furnitureType: "sofa", style: "classic",
+    image: "https://images.furniturevillage.co.uk/f_auto,t_product_large/v1567757364/catalog/sofas-chairs/classic/classic_hero_sofa_cream.jpg",
+    store: "Furniture Village", link: "https://www.furniturevillage.co.uk/classic-sofa"
+  },
+
+  // Modern Sofas
+  {
+    id: "mo_s1", name: "Made Oskar Sofa", price: "£999", furnitureType: "sofa", style: "modern",
+    image: "https://img.made.com/image/upload/c_pad,d_madex_photogrey.svg,f_auto,w_982,h_654/v1/catalogue/product/furniture/seating/sofas/SOFOS003NAV_UK/Oskar_3_Seater_Sofa_Navy_Blue_angle.png",
+    store: "Made.com", link: "https://www.made.com/oskar-3-seater-sofa-navy-blue"
+  },
+  {
+    id: "mo_s2", name: "Wayfair Modern Sectional", price: "£1199", furnitureType: "sofa", style: "modern",
+    image: "https://secure.img1-fg.wfcdn.com/im/30359482/resize-h800-w800%5Ecompr-r85/1396/139622902/modern-sectional-sofa.jpg",
+    store: "Wayfair UK", link: "https://www.wayfair.co.uk/furniture/pdp/modern-sectional-sofa-BNRS2073.html"
+  },
+  {
+    id: "mo_s3", name: "Habitat Bond Sofa", price: "£899", furnitureType: "sofa", style: "modern",
+    image: "https://images.habitat.co.uk/is/image/Habitat/197446_1?$PRODUCT_LISTING$",
+    store: "Habitat", link: "https://www.habitat.co.uk/bond-sofa-197446"
+  },
+
   // Tables - Italian
   {
     id: "it_t1", name: "Made Dante Dining Table", price: "£899", furnitureType: "table", style: "italian",
@@ -178,6 +229,142 @@ const CATALOGUE: Product[] = [
     store: "Wayfair UK", link: "https://www.wayfair.co.uk/furniture/pdp/karla-dining-table-BNRS2072.html"
   },
 
+  // Tables - Oriental
+  {
+    id: "or_t1", name: "John Lewis Bamboo Table", price: "£699", furnitureType: "table", style: "oriental",
+    image: "https://johnlewis.scene7.com/is/image/JohnLewis/238520950?$rsp-pdp-port-640$",
+    store: "John Lewis", link: "https://www.johnlewis.com/bamboo-dining-table/p238520950"
+  },
+  {
+    id: "or_t2", name: "Swoon Oriental Dining Table", price: "£799", furnitureType: "table", style: "oriental",
+    image: "https://cdn.swooneditions.com/images/v1/product-images/TABORI001DAR_1.jpg",
+    store: "Swoon Editions", link: "https://swooneditions.com/oriental-dining-table-dark"
+  },
+  {
+    id: "or_t3", name: "Heals Japanese Style Table", price: "£1199", furnitureType: "table", style: "oriental",
+    image: "https://www.heals.com/media/catalog/product/j/a/japanese-style-table_1.jpg",
+    store: "Heals", link: "https://www.heals.com/japanese-style-table.html"
+  },
+
+  // Tables - Classic
+  {
+    id: "cl_t1", name: "Cotswold Oak Dining Table", price: "£899", furnitureType: "table", style: "classic",
+    image: "https://www.cotswoldco.com/media/catalog/product/o/a/oak-dining-table_1.jpg",
+    store: "Cotswold Co", link: "https://www.cotswoldco.com/oak-dining-table"
+  },
+  {
+    id: "cl_t2", name: "DFS Traditional Table", price: "£799", furnitureType: "table", style: "classic",
+    image: "https://images.dfs.co.uk/i/dfs/traditional_dining_table?$large$",
+    store: "DFS", link: "https://www.dfs.co.uk/traditional-dining-table"
+  },
+  {
+    id: "cl_t3", name: "Furniture Village Heritage Table", price: "£1099", furnitureType: "table", style: "classic",
+    image: "https://images.furniturevillage.co.uk/f_auto,t_product_large/v1567757364/catalog/dining/heritage/heritage_hero_table_oak.jpg",
+    store: "Furniture Village", link: "https://www.furniturevillage.co.uk/heritage-dining-table"
+  },
+
+  // Tables - Modern
+  {
+    id: "mo_t1", name: "Made Enzo Dining Table", price: "£649", furnitureType: "table", style: "modern",
+    image: "https://img.made.com/image/upload/c_pad,d_madex_photogrey.svg,f_auto,w_982,h_654/v1/catalogue/product/furniture/dining/dining-tables/TABENZ001BLA_UK/Enzo_Dining_Table_Black_angle.png",
+    store: "Made.com", link: "https://www.made.com/enzo-dining-table-black"
+  },
+  {
+    id: "mo_t2", name: "Wayfair Contemporary Table", price: "£549", furnitureType: "table", style: "modern",
+    image: "https://secure.img1-fg.wfcdn.com/im/30359482/resize-h800-w800%5Ecompr-r85/1396/139622903/contemporary-dining-table.jpg",
+    store: "Wayfair UK", link: "https://www.wayfair.co.uk/furniture/pdp/contemporary-dining-table-BNRS2074.html"
+  },
+  {
+    id: "mo_t3", name: "Habitat Matrix Table", price: "£599", furnitureType: "table", style: "modern",
+    image: "https://images.habitat.co.uk/is/image/Habitat/197447_1?$PRODUCT_LISTING$",
+    store: "Habitat", link: "https://www.habitat.co.uk/matrix-table-197447"
+  },
+
+  // Beds - Italian
+  {
+    id: "it_b1", name: "Made Ricola Bed", price: "£999", furnitureType: "bed", style: "italian",
+    image: "https://img.made.com/image/upload/c_pad,d_madex_photogrey.svg,f_auto,w_982,h_654/v1/catalogue/product/furniture/bedroom/beds/BEDRIC001VEL_UK/Ricola_Bed_Velvet_angle.png",
+    store: "Made.com", link: "https://www.made.com/ricola-bed-velvet"
+  },
+  {
+    id: "it_b2", name: "John Lewis Tuscan Bed", price: "£1299", furnitureType: "bed", style: "italian",
+    image: "https://johnlewis.scene7.com/is/image/JohnLewis/238520951?$rsp-pdp-port-640$",
+    store: "John Lewis", link: "https://www.johnlewis.com/tuscan-bed/p238520951"
+  },
+  {
+    id: "it_b3", name: "Heals Milano Leather Bed", price: "£1899", furnitureType: "bed", style: "italian",
+    image: "https://www.heals.com/media/catalog/product/m/i/milano-leather-bed_1.jpg",
+    store: "Heals", link: "https://www.heals.com/milano-leather-bed.html"
+  },
+
+  // Beds - Minimalistic
+  {
+    id: "mi_b1", name: "IKEA MALM Bed", price: "£199", furnitureType: "bed", style: "minimalistic",
+    image: "https://www.ikea.com/gb/en/images/products/malm-bed-frame-high-white__0749131_pe745499_s5.jpg",
+    store: "IKEA UK", link: "https://www.ikea.com/gb/en/p/malm-bed-frame-high-white-00160867/"
+  },
+  {
+    id: "mi_b2", name: "Habitat Scandi Bed", price: "£399", furnitureType: "bed", style: "minimalistic",
+    image: "https://images.habitat.co.uk/is/image/Habitat/197448_1?$PRODUCT_LISTING$",
+    store: "Habitat", link: "https://www.habitat.co.uk/scandi-bed-197448"
+  },
+  {
+    id: "mi_b3", name: "Wayfair Clean Line Bed", price: "£349", furnitureType: "bed", style: "minimalistic",
+    image: "https://secure.img1-fg.wfcdn.com/im/30359482/resize-h800-w800%5Ecompr-r85/1396/139622904/clean-line-bed.jpg",
+    store: "Wayfair UK", link: "https://www.wayfair.co.uk/furniture/pdp/clean-line-bed-BNRS2075.html"
+  },
+
+  // Beds - Oriental
+  {
+    id: "or_b1", name: "John Lewis Zen Platform Bed", price: "£899", furnitureType: "bed", style: "oriental",
+    image: "https://johnlewis.scene7.com/is/image/JohnLewis/238520952?$rsp-pdp-port-640$",
+    store: "John Lewis", link: "https://www.johnlewis.com/zen-platform-bed/p238520952"
+  },
+  {
+    id: "or_b2", name: "Swoon Futon Style Bed", price: "£749", furnitureType: "bed", style: "oriental",
+    image: "https://cdn.swooneditions.com/images/v1/product-images/BEDFUT001DAR_1.jpg",
+    store: "Swoon Editions", link: "https://swooneditions.com/futon-style-bed-dark"
+  },
+  {
+    id: "or_b3", name: "Heals Japanese Low Bed", price: "£1299", furnitureType: "bed", style: "oriental",
+    image: "https://www.heals.com/media/catalog/product/j/a/japanese-low-bed_1.jpg",
+    store: "Heals", link: "https://www.heals.com/japanese-low-bed.html"
+  },
+
+  // Beds - Classic
+  {
+    id: "cl_b1", name: "Cotswold Oak Sleigh Bed", price: "£1199", furnitureType: "bed", style: "classic",
+    image: "https://www.cotswoldco.com/media/catalog/product/o/a/oak-sleigh-bed_1.jpg",
+    store: "Cotswold Co", link: "https://www.cotswoldco.com/oak-sleigh-bed"
+  },
+  {
+    id: "cl_b2", name: "DFS Traditional Upholstered Bed", price: "£999", furnitureType: "bed", style: "classic",
+    image: "https://images.dfs.co.uk/i/dfs/traditional_upholstered_bed?$large$",
+    store: "DFS", link: "https://www.dfs.co.uk/traditional-upholstered-bed"
+  },
+  {
+    id: "cl_b3", name: "Furniture Village Heritage Bed", price: "£1399", furnitureType: "bed", style: "classic",
+    image: "https://images.furniturevillage.co.uk/f_auto,t_product_large/v1567757364/catalog/bedroom/heritage/heritage_hero_bed_oak.jpg",
+    store: "Furniture Village", link: "https://www.furniturevillage.co.uk/heritage-bed"
+  },
+
+  // Beds - Modern
+  {
+    id: "mo_b1", name: "Made Alexia Bed", price: "£799", furnitureType: "bed", style: "modern",
+    image: "https://img.made.com/image/upload/c_pad,d_madex_photogrey.svg,f_auto,w_982,h_654/v1/catalogue/product/furniture/bedroom/beds/BEDALE001BLA_UK/Alexia_Bed_Black_angle.png",
+    store: "Made.com", link: "https://www.made.com/alexia-bed-black"
+  },
+  {
+    id: "mo_b2", name: "Wayfair Platform Bed", price: "£649", furnitureType: "bed", style: "modern",
+    image: "https://secure.img1-fg.wfcdn.com/im/30359482/resize-h800-w800%5Ecompr-r85/1396/139622905/platform-bed-modern.jpg",
+    store: "Wayfair UK", link: "https://www.wayfair.co.uk/furniture/pdp/platform-bed-modern-BNRS2076.html"
+  },
+  {
+    id: "mo_b3", name: "Habitat Curve Bed", price: "£899", furnitureType: "bed", style: "modern",
+    image: "https://images.habitat.co.uk/is/image/Habitat/197449_1?$PRODUCT_LISTING$",
+    store: "Habitat", link: "https://www.habitat.co.uk/curve-bed-197449"
+  },
+
   // Carpets - Italian
   {
     id: "it_ca1", name: "Made Fara Italian Rug", price: "£249", furnitureType: "carpet", style: "italian",
@@ -210,6 +397,57 @@ const CATALOGUE: Product[] = [
     id: "mi_ca3", name: "Made Loma Rug", price: "£199", furnitureType: "carpet", style: "minimalistic",
     image: "https://img.made.com/image/upload/c_pad,d_madex_photogrey.svg,f_auto,w_982,h_654/v1/catalogue/product/home/rugs/large-rugs/RUGLOM001BEI_UK/Loma_Large_Rug_Beige_angle.png",
     store: "Made.com", link: "https://www.made.com/loma-large-rug-beige"
+  },
+
+  // Carpets - Oriental
+  {
+    id: "or_ca1", name: "John Lewis Persian Rug", price: "£799", furnitureType: "carpet", style: "oriental",
+    image: "https://johnlewis.scene7.com/is/image/JohnLewis/238520953?$rsp-pdp-port-640$",
+    store: "John Lewis", link: "https://www.johnlewis.com/persian-rug/p238520953"
+  },
+  {
+    id: "or_ca2", name: "Swoon Oriental Pattern Rug", price: "£649", furnitureType: "carpet", style: "oriental",
+    image: "https://cdn.swooneditions.com/images/v1/product-images/RUGORI001RED_1.jpg",
+    store: "Swoon Editions", link: "https://swooneditions.com/oriental-pattern-rug-red"
+  },
+  {
+    id: "or_ca3", name: "Heals Mandala Rug", price: "£899", furnitureType: "carpet", style: "oriental",
+    image: "https://www.heals.com/media/catalog/product/m/a/mandala-rug-blue_1.jpg",
+    store: "Heals", link: "https://www.heals.com/mandala-rug-blue.html"
+  },
+
+  // Carpets - Classic
+  {
+    id: "cl_ca1", name: "Cotswold Traditional Rug", price: "£399", furnitureType: "carpet", style: "classic",
+    image: "https://www.cotswoldco.com/media/catalog/product/t/r/traditional-rug-red_1.jpg",
+    store: "Cotswold Co", link: "https://www.cotswoldco.com/traditional-rug-red"
+  },
+  {
+    id: "cl_ca2", name: "DFS Heritage Carpet", price: "£499", furnitureType: "carpet", style: "classic",
+    image: "https://images.dfs.co.uk/i/dfs/heritage_carpet_cream?$large$",
+    store: "DFS", link: "https://www.dfs.co.uk/heritage-carpet"
+  },
+  {
+    id: "cl_ca3", name: "Furniture Village Classic Rug", price: "£549", furnitureType: "carpet", style: "classic",
+    image: "https://images.furniturevillage.co.uk/f_auto,t_product_large/v1567757364/catalog/rugs/classic/classic_hero_rug_burgundy.jpg",
+    store: "Furniture Village", link: "https://www.furniturevillage.co.uk/classic-rug"
+  },
+
+  // Carpets - Modern
+  {
+    id: "mo_ca1", name: "Made Kala Abstract Rug", price: "£299", furnitureType: "carpet", style: "modern",
+    image: "https://img.made.com/image/upload/c_pad,d_madex_photogrey.svg,f_auto,w_982,h_654/v1/catalogue/product/home/rugs/large-rugs/RUGKAL001BLU_UK/Kala_Large_Rug_Blue_angle.png",
+    store: "Made.com", link: "https://www.made.com/kala-large-rug-blue"
+  },
+  {
+    id: "mo_ca2", name: "Wayfair Contemporary Rug", price: "£349", furnitureType: "carpet", style: "modern",
+    image: "https://secure.img1-fg.wfcdn.com/im/30359482/resize-h800-w800%5Ecompr-r85/1396/139622906/contemporary-rug-modern.jpg",
+    store: "Wayfair UK", link: "https://www.wayfair.co.uk/furniture/pdp/contemporary-rug-modern-BNRS2077.html"
+  },
+  {
+    id: "mo_ca3", name: "Habitat Matrix Pattern Rug", price: "£279", furnitureType: "carpet", style: "modern",
+    image: "https://images.habitat.co.uk/is/image/Habitat/197450_1?$PRODUCT_LISTING$",
+    store: "Habitat", link: "https://www.habitat.co.uk/matrix-pattern-rug-197450"
   }
 ];
 
@@ -247,13 +485,22 @@ export const VisualizationResults = ({
       const updated: { [id: string]: string } = {};
       for (const product of products) {
         try {
-          const response = await fetch("https://api.remove.bg/v1.0/removebg", {
-            method: "POST",
-            headers: { "X-Api-Key": REMOVE_BG_API_KEY },
-            body: new URLSearchParams({ image_url: product.image, size: "auto" })
+          console.log('Processing background removal for:', product.name);
+          // Create an image element from the URL
+          const img = new Image();
+          img.crossOrigin = 'anonymous';
+          
+          await new Promise((resolve, reject) => {
+            img.onload = resolve;
+            img.onerror = reject;
+            img.src = product.image;
           });
-          const blob = await response.blob();
-          updated[product.id] = URL.createObjectURL(blob);
+          
+          // Use browser-based background removal
+          const imageBlob = await fetch(product.image).then(r => r.blob());
+          const imageElement = await loadImage(imageBlob);
+          const processedBlob = await removeBackground(imageElement);
+          updated[product.id] = URL.createObjectURL(processedBlob);
           console.log('Background removed for product:', product.id);
         } catch (error) {
           console.log('Failed to remove background for product:', product.id, error);
