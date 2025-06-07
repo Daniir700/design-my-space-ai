@@ -1,5 +1,4 @@
 
-const CATALOGUE: Product[] = [
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -12,7 +11,7 @@ interface Product {
   price: string;
   image: string;
   store: string;
-  link: string;,
+  link: string;
   furnitureType: string;
   style: string;
 }
@@ -270,10 +269,19 @@ export const VisualizationResults = ({
   const [cleanedImages, setCleanedImages] = useState<{ [id: string]: string }>({});
   const [loading, setLoading] = useState(true);
   const [scales, setScales] = useState<{ [id: string]: number }>({});
+  const [rotations, setRotations] = useState<{ [id: string]: number }>({});
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
   const products = CATALOGUE.filter(p =>
     p.furnitureType === selections.furnitureType && p.style === selections.style
-  );
+  ).slice(0, 3); // Ensure we only show 3 options
+
+  useEffect(() => {
+    // Set the first product as selected by default
+    if (products.length > 0 && !selectedProduct) {
+      setSelectedProduct(products[0]);
+    }
+  }, [products, selectedProduct]);
 
   useEffect(() => {
     let active = true;
@@ -301,45 +309,97 @@ export const VisualizationResults = ({
     return () => { active = false; };
   }, [products]);
 
-  const handlePinch = (id: string, e: React.WheelEvent<HTMLImageElement>) => {
+  const handleTouchStart = (id: string, e: React.TouchEvent<HTMLImageElement>) => {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+    }
+  };
+
+  const handleTouchMove = (id: string, e: React.TouchEvent<HTMLImageElement>) => {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      const distance = Math.sqrt(
+        Math.pow(touch2.clientX - touch1.clientX, 2) + 
+        Math.pow(touch2.clientY - touch1.clientY, 2)
+      );
+      
+      // Simple pinch detection
+      const newScale = Math.max(0.3, Math.min(distance / 100, 3));
+      setScales(prev => ({ ...prev, [id]: newScale }));
+    }
+  };
+
+  const handleWheel = (id: string, e: React.WheelEvent<HTMLImageElement>) => {
     e.preventDefault();
     const newScale = (scales[id] || 1) + (e.deltaY < 0 ? 0.1 : -0.1);
     setScales(prev => ({ ...prev, [id]: Math.max(0.3, Math.min(newScale, 3)) }));
   };
 
+  const handleDoubleClick = (id: string) => {
+    const newRotation = (rotations[id] || 0) + 90;
+    setRotations(prev => ({ ...prev, [id]: newRotation % 360 }));
+  };
+
   return (
     <div className="p-4 space-y-4">
+      {/* Visualization Mockup */}
       <div className="relative border rounded overflow-hidden">
         <img src={roomImage} alt="Room" className="w-full object-cover" />
-        {!loading && products.map(product => (
-          <Draggable key={product.id}>
+        {!loading && selectedProduct && cleanedImages[selectedProduct.id] && (
+          <Draggable key={selectedProduct.id}>
             <img
-              src={cleanedImages[product.id]}
-              alt={product.name}
-              className="absolute top-10 left-10 drop-shadow-xl touch-none"
-              onWheel={(e) => handlePinch(product.id, e)}
-              style={{ width: `${(scales[product.id] || 1) * 160}px`, zIndex: 10 }}
+              src={cleanedImages[selectedProduct.id]}
+              alt={selectedProduct.name}
+              className="absolute top-10 left-10 drop-shadow-xl touch-none cursor-move"
+              onTouchStart={(e) => handleTouchStart(selectedProduct.id, e)}
+              onTouchMove={(e) => handleTouchMove(selectedProduct.id, e)}
+              onWheel={(e) => handleWheel(selectedProduct.id, e)}
+              onDoubleClick={() => handleDoubleClick(selectedProduct.id)}
+              style={{ 
+                width: `${(scales[selectedProduct.id] || 1) * 160}px`, 
+                zIndex: 10,
+                transform: `rotate(${rotations[selectedProduct.id] || 0}deg)`
+              }}
             />
           </Draggable>
-        ))}
+        )}
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        {products.map(product => (
-          <Card key={product.id} className="p-4">
-            <img src={cleanedImages[product.id] || product.image} className="w-full mb-2" />
-            <div className="text-lg font-bold">{product.name}</div>
-            <div>{product.price}</div>
-            <a
-              href={product.link}
-              target="_blank"
-              rel="noreferrer"
-              className="mt-2 block bg-black text-white text-center py-2 rounded"
+      {/* Product Selection Cards */}
+      <div className="space-y-4">
+        <h3 className="text-lg font-semibold">Choose from {products.length} options:</h3>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {products.map(product => (
+            <Card 
+              key={product.id} 
+              className={`p-4 cursor-pointer transition-all ${
+                selectedProduct?.id === product.id 
+                  ? 'border-green-500 bg-green-50' 
+                  : 'hover:bg-gray-50'
+              }`}
+              onClick={() => setSelectedProduct(product)}
             >
-              Buy on {product.store}
-            </a>
-          </Card>
-        ))}
+              <img 
+                src={cleanedImages[product.id] || product.image} 
+                alt={product.name}
+                className="w-full h-40 object-contain mb-2 bg-white rounded" 
+              />
+              <div className="text-lg font-bold">{product.name}</div>
+              <div className="text-green-600 font-semibold">{product.price}</div>
+              <a
+                href={product.link}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-2 block bg-black text-white text-center py-2 rounded hover:bg-gray-800 transition-colors"
+                onClick={(e) => e.stopPropagation()}
+              >
+                Buy on {product.store}
+              </a>
+            </Card>
+          ))}
+        </div>
       </div>
 
       <div className="flex justify-between mt-6">
