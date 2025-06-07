@@ -25,6 +25,7 @@ interface VisualizationResultsProps {
 
 const REMOVE_BG_API_KEY = "msBHY5X91Ur2PB4AoaL1pgzD";
 
+const CATALOGUE: Product[] = [
   {
     id: "c1", name: "Italian Leather Chair", price: "£199", furnitureType: "chair", style: "Italian",
     image: "https://www.ikea.com/gb/en/images/products/remsta-armchair-gunnared-beige__1042527_pe841199_s5.png",
@@ -65,8 +66,6 @@ const REMOVE_BG_API_KEY = "msBHY5X91Ur2PB4AoaL1pgzD";
     image: "https://www.ikea.com/gb/en/images/products/lycksele-lovas-2-seat-sofa-bed-lycksele-gra__0187025_pe338383_s5.png",
     store: "IKEA UK", link: "https://www.ikea.com/gb/en/p/lycksele-lovas-2-seat-sofa-bed-lycksele-gra-s69290299/"
   },
-  // ... existing products
-
   // Minimalistic Tables
   {
     id: "mi_tb_1",
@@ -98,7 +97,6 @@ const REMOVE_BG_API_KEY = "msBHY5X91Ur2PB4AoaL1pgzD";
     store: "Amazon UK",
     link: "https://www.amazon.co.uk/dp/B0C7K5X7YF"
   },
-
   // Italian Tables
   {
     id: "it_tb_1",
@@ -130,7 +128,6 @@ const REMOVE_BG_API_KEY = "msBHY5X91Ur2PB4AoaL1pgzD";
     store: "Cassoni",
     link: "https://cassoni.com/product/acco-table/"
   },
-
   // Oriental Tables
   {
     id: "or_tb_1",
@@ -162,7 +159,6 @@ const REMOVE_BG_API_KEY = "msBHY5X91Ur2PB4AoaL1pgzD";
     store: "Orchid Furniture",
     link: "https://www.orchidfurniture.co.uk/product/chinese-console-table/"
   },
-
   // Minimalistic Carpets
   {
     id: "mi_ca_1",
@@ -194,7 +190,6 @@ const REMOVE_BG_API_KEY = "msBHY5X91Ur2PB4AoaL1pgzD";
     store: "Rugette",
     link: "https://rugette.co.uk/collections/minimalist-rugs"
   },
-
   // Italian Carpets
   {
     id: "it_ca_1",
@@ -226,7 +221,6 @@ const REMOVE_BG_API_KEY = "msBHY5X91Ur2PB4AoaL1pgzD";
     store: "Design Italy",
     link: "https://designitaly.com/collections/rugs"
   },
-
   // Oriental Carpets
   {
     id: "or_ca_1",
@@ -256,12 +250,9 @@ const REMOVE_BG_API_KEY = "msBHY5X91Ur2PB4AoaL1pgzD";
     style: "Oriental",
     image: "https://www.olneyrugs.co.uk/cdn/shop/products/TraditionalRug.jpg",
     store: "Olney Oriental Rugs",
-    link: "https://www.olneyrugs.co.uk/",
+    link: "https://www.olneyrugs.co.uk/"
   }
-
-  // ... additional products as needed
 ];
-  
 
 export const VisualizationResults = ({
   roomImage, selections, onBack, onStartOver
