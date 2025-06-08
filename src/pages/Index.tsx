@@ -1,8 +1,7 @@
-
 import { useState } from "react";
 import { CameraUpload } from "@/components/CameraUpload";
 import { FurnitureSelection } from "@/components/FurnitureSelection";
-import { VisualizationResults } from "@/components/VisualizationResults";
+import VisualizationResults from "@/components/VisualizationResults";
 
 export type FurnitureType = "sofa" | "table" | "chair" | "bed" | "carpet";
 export type StyleType = "italian" | "oriental" | "classic" | "modern" | "minimalistic";
