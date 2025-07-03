@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import Draggable from "react-draggable";
+import { DraggableFurniture } from "@/components/DraggableFurniture";
+import { removeBackground } from "@/utils/backgroundRemoval";
 import { UserSelections } from "@/pages/Index";
 
 interface Product {
@@ -58,11 +59,11 @@ const CATALOGUE: Product[] = [
   // Minimalistic Sofas
   {
     id: "min_s1",
-    name: "KIVIK 3-seat sofa",
+    name: "KIVIK 3-seat Beige",
     image: "https://www.ikea.com/gb/en/images/products/kivik-3-seat-sofa-tibbleby-beige-grey__0837214_pe732317_s5.jpg",
     style: "minimalistic",
     furnitureType: "sofa",
-    price: "£450",
+    price: "£599",
     store: "IKEA",
     link: "https://www.ikea.com/gb/en/p/kivik-3-seat-sofa-tibbleby-beige-grey-s69440596/"
   },
@@ -224,7 +225,7 @@ const CATALOGUE: Product[] = [
     furnitureType: "table",
     price: "£180",
     store: "IKEA",
-    link: "https://www.ikea.com/gb/en/cat/tables-chairs-fu002/"
+    link: "https://www.ikea.com/gb/en/p/lisabo-table-ash-veneer-40297952/"
   },
   {
     id: "min_t2",
@@ -384,7 +385,7 @@ const CATALOGUE: Product[] = [
     furnitureType: "chair",
     price: "£70",
     store: "IKEA",
-    link: "https://www.ikea.com/gb/en/cat/tables-chairs-fu002/"
+    link: "https://www.ikea.com/gb/en/p/odger-chair-blue-green-70335228/"
   },
   {
     id: "min_c2",
@@ -544,7 +545,7 @@ const CATALOGUE: Product[] = [
     furnitureType: "bed",
     price: "£179",
     store: "IKEA",
-    link: "https://www.ikea.com/gb/en/cat/beds-bm003/"
+    link: "https://www.ikea.com/gb/en/p/malm-bed-frame-white-s59009475/"
   },
   {
     id: "min_b2",
@@ -704,7 +705,7 @@ const CATALOGUE: Product[] = [
     furnitureType: "carpet",
     price: "£149",
     store: "IKEA",
-    link: "https://www.ikea.com/gb/en/cat/rugs-10653/"
+    link: "https://www.ikea.com/gb/en/p/stockholm-rug-flatwoven-handmade-stripe-grey-50397246/"
   },
   {
     id: "min_r2",
@@ -824,24 +825,6 @@ const CATALOGUE: Product[] = [
   }
 ];
 
-async function removeBackgroundPixian(imageUrl: string): Promise<string> {
-  const response = await fetch(imageUrl);
-  const blob = await response.blob();
-  const formData = new FormData();
-  formData.append("image_file", new File([blob], "furniture.png", { type: blob.type }));
-
-  const removeRes = await fetch("https://api.pixian.ai/remove-background", {
-    method: "POST",
-    body: formData,
-  });
-
-  if (!removeRes.ok) {
-    throw new Error("Background removal failed");
-  }
-
-  const cleanedBlob = await removeRes.blob();
-  return URL.createObjectURL(cleanedBlob);
-}
 
 export default function VisualizationResults({ roomImage, selections, onBack, onStartOver }: VisualizationResultsProps) {
   const [results, setResults] = useState<Product[]>([]);
@@ -862,11 +845,13 @@ export default function VisualizationResults({ roomImage, selections, onBack, on
       try {
         setLoading(true);
         const cleanedImages = await Promise.all(
-          results.map((product) => removeBackgroundPixian(product.image))
+          results.map((product) => removeBackground(product.image))
         );
         setProcessedImages(cleanedImages);
       } catch (error) {
         console.error("Background processing failed:", error);
+        // Fallback to original images if background removal fails
+        setProcessedImages(results.map(product => product.image));
       } finally {
         setLoading(false);
       }
@@ -880,24 +865,33 @@ export default function VisualizationResults({ roomImage, selections, onBack, on
   return (
     <div className="p-4">
       <h2 className="text-xl font-bold mb-4">Mockup</h2>
-      <div className="relative border rounded-lg overflow-hidden mb-4">
+      <div className="relative border rounded-lg overflow-hidden mb-4 min-h-[400px]">
         <img src={roomImage} alt="Room" className="w-full object-cover" />
         {!loading &&
           processedImages.map((imgUrl, idx) => (
-            <Draggable key={idx}>
-              <img
-                src={imgUrl}
-                alt={`Furniture ${idx + 1}`}
-                style={{
-                  position: "absolute",
-                  top: 50 + idx * 30,
-                  left: 50 + idx * 30,
-                  width: "150px",
-                  zIndex: 10,
-                }}
-              />
-            </Draggable>
+            <DraggableFurniture
+              key={`furniture-${idx}`}
+              imageUrl={imgUrl}
+              alt={`${results[idx]?.name || 'Furniture'} ${idx + 1}`}
+              initialPosition={{ x: 50 + idx * 30, y: 50 + idx * 30 }}
+              onPositionChange={(position) => {
+                console.log(`Furniture ${idx} moved to:`, position);
+              }}
+            />
           ))}
+        {loading && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white">
+            Processing furniture images...
+          </div>
+        )}
+      </div>
+      <div className="flex gap-4 mb-4">
+        <Button onClick={onBack} variant="outline">
+          ← Back
+        </Button>
+        <Button onClick={onStartOver} variant="outline">
+          Start Over
+        </Button>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         {results.map((product, index) => (
