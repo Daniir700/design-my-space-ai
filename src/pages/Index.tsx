@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CameraUpload } from "@/components/CameraUpload";
 import { FurnitureSelection } from "@/components/FurnitureSelection";
-import VisualizationResults from "@/components/VisualizationResults";
+import { VisualizationScreen } from "@/components/VisualizationScreen";
 
 export type FurnitureType = "sofa" | "table" | "chair" | "bed" | "carpet";
 export type StyleType = "italian" | "oriental" | "classic" | "modern" | "minimalistic";
@@ -55,7 +55,7 @@ const Index = () => {
       )}
       
       {currentScreen === 3 && uploadedImage && selections && (
-        <VisualizationResults 
+        <VisualizationScreen 
           roomImage={uploadedImage}
           selections={selections}
           onBack={handleBack}
