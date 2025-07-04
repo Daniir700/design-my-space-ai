@@ -25,7 +25,38 @@ export const FurnitureOverlay: React.FC<FurnitureOverlayProps> = ({
   const handleWheel = useCallback((e: React.WheelEvent) => {
     e.preventDefault();
     const delta = e.deltaY > 0 ? -0.1 : 0.1;
-    setScale(prev => Math.max(0.2, Math.min(2, prev + delta)));
+    setScale(prev => Math.max(0.2, Math.min(3, prev + delta)));
+  }, []);
+
+  const handleTouch = useCallback((e: React.TouchEvent) => {
+    if (e.touches.length === 2) {
+      e.preventDefault();
+      // Calculate distance between two touches for pinch-to-zoom
+      const touch1 = e.touches[0];
+      const touch2 = e.touches[1];
+      const distance = Math.sqrt(
+        Math.pow(touch2.clientX - touch1.clientX, 2) + 
+        Math.pow(touch2.clientY - touch1.clientY, 2)
+      );
+      
+      // Store initial distance and scale for comparison
+      if (!nodeRef.current?.dataset.initialDistance) {
+        nodeRef.current!.dataset.initialDistance = distance.toString();
+        nodeRef.current!.dataset.initialScale = scale.toString();
+      } else {
+        const initialDistance = parseFloat(nodeRef.current.dataset.initialDistance);
+        const initialScale = parseFloat(nodeRef.current.dataset.initialScale);
+        const scaleChange = distance / initialDistance;
+        setScale(Math.max(0.2, Math.min(3, initialScale * scaleChange)));
+      }
+    }
+  }, [scale]);
+
+  const handleTouchEnd = useCallback(() => {
+    if (nodeRef.current) {
+      delete nodeRef.current.dataset.initialDistance;
+      delete nodeRef.current.dataset.initialScale;
+    }
   }, []);
 
   return (
@@ -43,13 +74,15 @@ export const FurnitureOverlay: React.FC<FurnitureOverlayProps> = ({
           zIndex: 10
         }}
         onWheel={handleWheel}
+        onTouchMove={handleTouch}
+        onTouchEnd={handleTouchEnd}
       >
         <img
           src={furnitureImage}
           alt={furnitureName}
           className="pointer-events-none max-w-none"
           style={{
-            width: "120px",
+            width: "150px",
             height: "auto",
             filter: "drop-shadow(0 4px 8px rgba(0,0,0,0.3))"
           }}

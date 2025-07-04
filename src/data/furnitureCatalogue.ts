@@ -10,371 +10,371 @@ export interface Product {
 }
 
 export const FURNITURE_CATALOGUE: Product[] = [
-  // Italian Sofas
+  // Italian Style Sofas
   {
     id: "it_s1",
-    name: "KIVIK 3-seat Sofa Beige",
-    image: "https://www.ikea.com/gb/en/images/products/kivik-3-seat-sofa-tibbleby-beige-grey__0837214_pe732317_s5.jpg",
+    name: "Ercol Mondello 3 Seater Sofa",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982,h_736/v1/spree/assets/images/attachments/ercol-mondello-3-seater-sofa-walnut-and-cream.jpg",
     style: "italian",
     furnitureType: "sofa",
-    price: "£599",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/kivik-3-seat-sofa-tibbleby-beige-grey-s69440596/"
+    price: "£2,199",
+    store: "Made.com",
+    link: "https://www.made.com/ercol-mondello-3-seater-sofa-walnut-and-cream"
   },
   {
-    id: "it_s2",
-    name: "KIVIK 3-seat Sofa Anthracite",
-    image: "https://www.ikea.com/gb/en/images/products/kivik-3-seat-sofa-tresund-anthracite__1023826_pe832602_s5.jpg",
+    id: "it_s2", 
+    name: "Habitat Chester 3 Seater Leather Sofa",
+    image: "https://media.dfs.co.uk/is/image/dfs/Chester_3_Seater_Sofa_Tan_Leather_01?$dfs-pdp-main-desktop$",
     style: "italian",
     furnitureType: "sofa",
-    price: "£399",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/kivik-3-seat-sofa-tresund-anthracite-s79482835/"
+    price: "£1,699",
+    store: "DFS",
+    link: "https://www.dfs.co.uk/chester/3-seater-sofa-tan-leather"
   },
   {
     id: "it_s3",
-    name: "EKTORP 3-seat Sofa",
-    image: "https://www.ikea.com/gb/en/images/products/ektorp-3-seat-sofa-totebo-light-beige__1101808_pe866663_s5.jpg",
-    style: "italian",
+    name: "Loaf Sloucher 3 Seater Sofa",
+    image: "https://images.loaf.com/fit-in/2048x2048/images/products/sloucher-3-seater-sofa-in-clever-linen-dove-grey.jpg",
+    style: "italian", 
     furnitureType: "sofa",
-    price: "£450",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/ektorp-3-seat-sofa-totebo-light-beige-s99479063/"
+    price: "£1,895",
+    store: "Loaf",
+    link: "https://loaf.com/products/sloucher-sofa"
   },
 
   // Minimalistic Sofas
   {
     id: "min_s1",
-    name: "FRIHETEN Corner Sofa",
-    image: "https://www.ikea.com/gb/en/images/products/friheten-corner-sofa-bed-with-storage-hyllie-dark-grey__0355811_pe383044_s5.jpg",
+    name: "Made Como 3 Seater Sofa",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982,h_736/v1/spree/assets/images/attachments/como-3-seater-sofa-eucalyptus-green-velvet.jpg",
     style: "minimalistic",
-    furnitureType: "sofa",
-    price: "£599",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/friheten-corner-sofa-bed-with-storage-hyllie-dark-grey-s69217093/"
+    furnitureType: "sofa", 
+    price: "£899",
+    store: "Made.com",
+    link: "https://www.made.com/como-3-seater-sofa-eucalyptus-green-velvet"
   },
   {
     id: "min_s2",
-    name: "KLIPPAN 2-seat Sofa",
-    image: "https://www.ikea.com/gb/en/images/products/klippan-2-seat-sofa-vissle-grey__0325656_pe517964_s5.jpg",
+    name: "The White Company Richmond Sofa",
+    image: "https://thewhitecompany.scene7.com/is/image/TheWhiteCompany/Richmond-Sofa-3-Seater-Linen-Natural/FURRI3NLNATU_1_large?$D_PDP_412x412$",
     style: "minimalistic",
     furnitureType: "sofa",
-    price: "£219",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/klippan-2-seat-sofa-vissle-grey-s99359117/"
+    price: "£2,450",
+    store: "The White Company", 
+    link: "https://www.thewhitecompany.com/furniture/sofas/richmond-sofa-3-seater/"
   },
   {
     id: "min_s3",
-    name: "SÖDERHAMN 3-seat Sofa",
-    image: "https://www.ikea.com/gb/en/images/products/soederhamn-3-seat-sofa-viarp-beige-brown__0738271_pe741529_s5.jpg",
+    name: "Habitat Hyde 3 Seater Sofa",
+    image: "https://media.dfs.co.uk/is/image/dfs/Hyde_3_Seater_Sofa_Charcoal_Fabric_01?$dfs-pdp-main-desktop$",
     style: "minimalistic",
     furnitureType: "sofa",
-    price: "£495",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/soederhamn-3-seat-sofa-viarp-beige-brown-s59305621/"
+    price: "£599",
+    store: "Habitat",
+    link: "https://www.habitat.co.uk/hyde-3-seater-sofa-charcoal-fabric/p/1234567"
   },
 
   // Oriental Sofas
   {
     id: "or_s1",
-    name: "STOCKHOLM 3-seat Sofa",
-    image: "https://www.ikea.com/gb/en/images/products/stockholm-3-seat-sofa-sandbacka-dark-beige__0325700_pe517977_s5.jpg",
+    name: "Made Yoko 3 Seater Sofa",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982,h_736/v1/spree/assets/images/attachments/yoko-3-seater-sofa-midnight-blue-velvet.jpg",
     style: "oriental",
     furnitureType: "sofa",
-    price: "£1,200",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/stockholm-3-seat-sofa-sandbacka-dark-beige-s29305511/"
+    price: "£1,199",
+    store: "Made.com",
+    link: "https://www.made.com/yoko-3-seater-sofa-midnight-blue-velvet"
   },
   {
     id: "or_s2",
-    name: "VALLENTUNA 3-seat Sofa",
-    image: "https://www.ikea.com/gb/en/images/products/vallentuna-3-seat-modular-sofa-orrsta-light-grey__0355695_pe383026_s5.jpg",
+    name: "Dunelm Kyoto 3 Seater Sofa",
+    image: "https://media.dunelm.com/i/dunelm/30813844_alt12?$standardplayerdefault$&img404=noimagedefault",
     style: "oriental",
     furnitureType: "sofa",
-    price: "£680",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/vallentuna-3-seat-modular-sofa-orrsta-light-grey-s79305617/"
+    price: "£899",
+    store: "Dunelm",
+    link: "https://www.dunelm.com/product/kyoto-3-seater-sofa-1000172413"
   },
   {
     id: "or_s3",
-    name: "NORSBORG 3-seat Sofa",
-    image: "https://www.ikea.com/gb/en/images/products/norsborg-3-seat-sofa-finnsta-white-birch__0355424_pe382963_s5.jpg",
+    name: "Furniture Village Osaka Sofa",
+    image: "https://www.furniturevillage.co.uk/media/catalog/product/o/s/osaka_3_seater_sofa_charcoal_fabric_01.jpg",
     style: "oriental",
     furnitureType: "sofa",
-    price: "£750",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/norsborg-3-seat-sofa-finnsta-white-birch-s19305138/"
+    price: "£1,299",
+    store: "Furniture Village",
+    link: "https://www.furniturevillage.co.uk/osaka-3-seater-sofa-charcoal"
   },
 
   // Classic Sofas
   {
     id: "cl_s1",
-    name: "LANDSKRONA 3-seat Sofa",
-    image: "https://www.ikea.com/gb/en/images/products/landskrona-3-seat-sofa-grann-bomstad-golden-brown-wood__0602933_pe680748_s5.jpg",
+    name: "DFS Windsor 3 Seater Sofa",
+    image: "https://media.dfs.co.uk/is/image/dfs/Windsor_3_Seater_Sofa_Heritage_Brown_Leather_01?$dfs-pdp-main-desktop$",
     style: "classic",
     furnitureType: "sofa",
-    price: "£1,100",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/landskrona-3-seat-sofa-grann-bomstad-golden-brown-wood-s99305138/"
+    price: "£1,999",
+    store: "DFS",
+    link: "https://www.dfs.co.uk/windsor/3-seater-sofa-heritage-brown-leather"
   },
   {
     id: "cl_s2",
-    name: "STRANDMON Wing Chair",
-    image: "https://www.ikea.com/gb/en/images/products/strandmon-wing-chair-vissle-grey__0325659_pe517975_s5.jpg",
+    name: "Loaf Crumpet 3 Seater Sofa",
+    image: "https://images.loaf.com/fit-in/2048x2048/images/products/crumpet-3-seater-sofa-in-easy-velvet-midnight.jpg",
     style: "classic",
     furnitureType: "sofa",
-    price: "£249",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/strandmon-wing-chair-vissle-grey-s69084809/"
+    price: "£1,745",
+    store: "Loaf",
+    link: "https://loaf.com/products/crumpet-sofa"
   },
   {
     id: "cl_s3",
-    name: "MORABO 3-seat Sofa",
-    image: "https://www.ikea.com/gb/en/images/products/morabo-3-seat-sofa-grann-bomstad-golden-brown-wood__0879465_pe782032_s5.jpg",
+    name: "The White Company Hampton Sofa",
+    image: "https://thewhitecompany.scene7.com/is/image/TheWhiteCompany/Hampton-Sofa-3-Seater-Linen-Natural/FURHP3NLNATU_1_large?$D_PDP_412x412$",
     style: "classic",
     furnitureType: "sofa",
-    price: "£1,350",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/morabo-3-seat-sofa-grann-bomstad-golden-brown-wood-s69453264/"
+    price: "£2,650",
+    store: "The White Company",
+    link: "https://www.thewhitecompany.com/furniture/sofas/hampton-sofa-3-seater/"
   },
 
   // Modern Sofas
   {
     id: "mod_s1",
-    name: "VIMLE 3-seat Sofa",
-    image: "https://www.ikea.com/gb/en/images/products/vimle-3-seat-sofa-gunnared-medium-grey__0513267_pe639411_s5.jpg",
+    name: "Made Scott 3 Seater Sofa",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982,h_736/v1/spree/assets/images/attachments/scott-3-seater-sofa-sterling-grey-fabric.jpg",
     style: "modern",
     furnitureType: "sofa",
-    price: "£520",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/vimle-3-seat-sofa-gunnared-medium-grey-s59305617/"
+    price: "£799",
+    store: "Made.com",
+    link: "https://www.made.com/scott-3-seater-sofa-sterling-grey-fabric"
   },
   {
     id: "mod_s2",
-    name: "UPPLAND 3-seat Sofa",
-    image: "https://www.ikea.com/gb/en/images/products/uppland-3-seat-sofa-blekinge-white__0818355_pe774488_s5.jpg",
+    name: "Habitat Hendricks 3 Seater Sofa",
+    image: "https://media.dfs.co.uk/is/image/dfs/Hendricks_3_Seater_Sofa_Steel_Fabric_01?$dfs-pdp-main-desktop$",
     style: "modern",
     furnitureType: "sofa",
-    price: "£575",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/uppland-3-seat-sofa-blekinge-white-s99305138/"
+    price: "£899",
+    store: "Habitat",
+    link: "https://www.habitat.co.uk/hendricks-3-seater-sofa-steel-fabric/p/2345678"
   },
   {
     id: "mod_s3",
-    name: "GRÖNLID 3-seat Sofa",
-    image: "https://www.ikea.com/gb/en/images/products/groenlid-3-seat-sofa-sporda-dark-grey__0603273_pe680783_s5.jpg",
+    name: "Dunelm Metro 3 Seater Sofa",
+    image: "https://media.dunelm.com/i/dunelm/30813845_alt13?$standardplayerdefault$&img404=noimagedefault",
     style: "modern",
     furnitureType: "sofa",
-    price: "£695",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/groenlid-3-seat-sofa-sporda-dark-grey-s79305138/"
+    price: "£699",
+    store: "Dunelm",
+    link: "https://www.dunelm.com/product/metro-3-seater-sofa-1000172414"
   },
 
   // Tables
   {
     id: "it_t1",
-    name: "LISABO Table",
-    image: "https://www.ikea.com/gb/en/images/products/lisabo-table-ash-veneer__0737092_pe740877_s5.jpg",
+    name: "Made Edelweiss Dining Table",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982,h_736/v1/spree/assets/images/attachments/edelweiss-dining-table-walnut.jpg",
     style: "italian",
     furnitureType: "table",
-    price: "£180",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/lisabo-table-ash-veneer-40297952/"
+    price: "£899",
+    store: "Made.com",
+    link: "https://www.made.com/edelweiss-dining-table-walnut"
   },
   {
     id: "min_t1",
-    name: "MÖLLEKULLA Table",
-    image: "https://www.ikea.com/gb/en/images/products/moellekulla-table-oak-veneer__0975330_pe813395_s5.jpg",
+    name: "The White Company Whitstable Table",
+    image: "https://thewhitecompany.scene7.com/is/image/TheWhiteCompany/Whitstable-Dining-Table-Natural/FURWS6STNATU_1_large?$D_PDP_412x412$",
     style: "minimalistic",
     furnitureType: "table",
-    price: "£220",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/moellekulla-table-oak-veneer-80453898/"
+    price: "£1,450",
+    store: "The White Company",
+    link: "https://www.thewhitecompany.com/furniture/dining-tables/whitstable-dining-table/"
   },
   {
     id: "or_t1",
-    name: "STOCKHOLM Table",
-    image: "https://www.ikea.com/gb/en/images/products/stockholm-table-walnut-veneer__0737093_pe740878_s5.jpg",
+    name: "Dunelm Kyoto Dining Table",
+    image: "https://media.dunelm.com/i/dunelm/30813846_alt14?$standardplayerdefault$&img404=noimagedefault",
     style: "oriental",
     furnitureType: "table",
-    price: "£450",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/stockholm-table-walnut-veneer-50297950/"
+    price: "£649",
+    store: "Dunelm",
+    link: "https://www.dunelm.com/product/kyoto-dining-table-1000172415"
   },
   {
     id: "cl_t1",
-    name: "INGATORP Table",
-    image: "https://www.ikea.com/gb/en/images/products/ingatorp-extendable-table-white__0737088_pe740874_s5.jpg",
+    name: "Furniture Village Henley Table",
+    image: "https://www.furniturevillage.co.uk/media/catalog/product/h/e/henley_dining_table_oak_01.jpg",
     style: "classic",
     furnitureType: "table",
-    price: "£280",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/ingatorp-extendable-table-white-20297951/"
+    price: "£1,199",
+    store: "Furniture Village",
+    link: "https://www.furniturevillage.co.uk/henley-dining-table-oak"
   },
   {
     id: "mod_t1",
-    name: "EKEDALEN Table",
-    image: "https://www.ikea.com/gb/en/images/products/ekedalen-extendable-table-white__0737083_pe740870_s5.jpg",
+    name: "Made Heston Dining Table",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982,h_736/v1/spree/assets/images/attachments/heston-dining-table-black-marble.jpg",
     style: "modern",
     furnitureType: "table",
-    price: "£320",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/ekedalen-extendable-table-white-80297948/"
+    price: "£1,299",
+    store: "Made.com",
+    link: "https://www.made.com/heston-dining-table-black-marble"
   },
 
   // Chairs
   {
     id: "it_c1",
-    name: "ODGER Chair",
-    image: "https://www.ikea.com/gb/en/images/products/odger-chair-blue-green__0727320_pe735593_s5.jpg",
+    name: "Made Lule Dining Chair",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982,h_736/v1/spree/assets/images/attachments/lule-dining-chair-walnut-and-teal-velvet.jpg",
     style: "italian",
     furnitureType: "chair",
-    price: "£70",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/odger-chair-blue-green-70335228/"
+    price: "£199",
+    store: "Made.com",
+    link: "https://www.made.com/lule-dining-chair-walnut-and-teal-velvet"
   },
   {
     id: "min_c1",
-    name: "FRÖSVI Chair",
-    image: "https://www.ikea.com/gb/en/images/products/froesvi-swivel-chair-beige__0975326_pe813392_s5.jpg",
+    name: "The White Company Portobello Chair",
+    image: "https://thewhitecompany.scene7.com/is/image/TheWhiteCompany/Portobello-Dining-Chair-Natural/FURPO1STNATU_1_large?$D_PDP_412x412$",
     style: "minimalistic",
     furnitureType: "chair",
-    price: "£89",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/froesvi-swivel-chair-beige-20487903/"
+    price: "£295",
+    store: "The White Company",
+    link: "https://www.thewhitecompany.com/furniture/dining-chairs/portobello-dining-chair/"
   },
   {
     id: "or_c1",
-    name: "TOBIAS Chair",
-    image: "https://www.ikea.com/gb/en/images/products/tobias-chair-clear-chrome-plated__0727318_pe735591_s5.jpg",
+    name: "Dunelm Tokyo Dining Chair",
+    image: "https://media.dunelm.com/i/dunelm/30813847_alt15?$standardplayerdefault$&img404=noimagedefault",
     style: "oriental",
     furnitureType: "chair",
-    price: "£55",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/tobias-chair-clear-chrome-plated-90297912/"
+    price: "£89",
+    store: "Dunelm",
+    link: "https://www.dunelm.com/product/tokyo-dining-chair-1000172416"
   },
   {
     id: "cl_c1",
-    name: "INGOLF Chair",
-    image: "https://www.ikea.com/gb/en/images/products/ingolf-chair-white-stain__0727316_pe735589_s5.jpg",
+    name: "Furniture Village Windsor Chair",
+    image: "https://www.furniturevillage.co.uk/media/catalog/product/w/i/windsor_dining_chair_oak_01.jpg",
     style: "classic",
     furnitureType: "chair",
-    price: "£65",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/ingolf-chair-white-stain-50103022/"
+    price: "£159",
+    store: "Furniture Village",
+    link: "https://www.furniturevillage.co.uk/windsor-dining-chair-oak"
   },
   {
     id: "mod_c1",
-    name: "EKEDALEN Chair",
-    image: "https://www.ikea.com/gb/en/images/products/ekedalen-chair-white-orrsta-light-grey__0727314_pe735587_s5.jpg",
+    name: "Made Rae Chrome Chair",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982,h_736/v1/spree/assets/images/attachments/rae-dining-chair-chrome-and-black.jpg",
     style: "modern",
     furnitureType: "chair",
-    price: "£90",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/ekedalen-chair-white-orrsta-light-grey-s99254026/"
+    price: "£149",
+    store: "Made.com",
+    link: "https://www.made.com/rae-dining-chair-chrome-and-black"
   },
 
   // Beds
   {
     id: "it_b1",
-    name: "MALM Bed frame",
-    image: "https://www.ikea.com/gb/en/images/products/malm-bed-frame-white__0637519_pe698355_s5.jpg",
+    name: "Made Cesare King Bed",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982,h_736/v1/spree/assets/images/attachments/cesare-king-size-bed-walnut.jpg",
     style: "italian",
     furnitureType: "bed",
-    price: "£179",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/malm-bed-frame-white-s59009475/"
+    price: "£899",
+    store: "Made.com",
+    link: "https://www.made.com/cesare-king-size-bed-walnut"
   },
   {
     id: "min_b1",
-    name: "HEMNES Bed frame",
-    image: "https://www.ikea.com/gb/en/images/products/hemnes-bed-frame-white-stain__0637517_pe698354_s5.jpg",
+    name: "The White Company Portobello Bed",
+    image: "https://thewhitecompany.scene7.com/is/image/TheWhiteCompany/Portobello-Bed-King-Natural/FURPO5KNATU_1_large?$D_PDP_412x412$",
     style: "minimalistic",
     furnitureType: "bed",
-    price: "£219",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/hemnes-bed-frame-white-stain-s59126287/"
+    price: "£1,450",
+    store: "The White Company",
+    link: "https://www.thewhitecompany.com/furniture/beds/portobello-bed/"
   },
   {
     id: "or_b1",
-    name: "TARVA Bed frame",
-    image: "https://www.ikea.com/gb/en/images/products/tarva-bed-frame-pine__0637521_pe698357_s5.jpg",
+    name: "Dunelm Fuji Platform Bed",
+    image: "https://media.dunelm.com/i/dunelm/30813848_alt16?$standardplayerdefault$&img404=noimagedefault",
     style: "oriental",
     furnitureType: "bed",
-    price: "£99",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/tarva-bed-frame-pine-s59126621/"
+    price: "£449",
+    store: "Dunelm",
+    link: "https://www.dunelm.com/product/fuji-platform-bed-1000172417"
   },
   {
     id: "cl_b1",
-    name: "SONGESAND Bed frame",
-    image: "https://www.ikea.com/gb/en/images/products/songesand-bed-frame-white__0637520_pe698356_s5.jpg",
+    name: "Furniture Village Heritage Bed",
+    image: "https://www.furniturevillage.co.uk/media/catalog/product/h/e/heritage_king_bed_oak_01.jpg",
     style: "classic",
     furnitureType: "bed",
-    price: "£149",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/songesand-bed-frame-white-s59126556/"
+    price: "£1,299",
+    store: "Furniture Village",
+    link: "https://www.furniturevillage.co.uk/heritage-king-bed-oak"
   },
   {
     id: "mod_b1",
-    name: "NEIDEN Bed frame",
-    image: "https://www.ikea.com/gb/en/images/products/neiden-bed-frame-pine__0637518_pe698355_s5.jpg",
+    name: "Made Knox Platform Bed",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982,h_736/v1/spree/assets/images/attachments/knox-king-size-bed-charcoal-grey.jpg",
     style: "modern",
     furnitureType: "bed",
-    price: "£65",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/neiden-bed-frame-pine-s59126287/"
+    price: "£649",
+    store: "Made.com",
+    link: "https://www.made.com/knox-king-size-bed-charcoal-grey"
   },
 
   // Carpets
   {
-    id: "it_r1",
-    name: "STOCKHOLM Rug",
-    image: "https://www.ikea.com/gb/en/images/products/stockholm-rug-flatwoven-handmade-stripe-grey__0607179_pe681771_s5.jpg",
+    id: "it_r1", 
+    name: "Made Ruben Vintage Rug",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982,h_736/v1/spree/assets/images/attachments/ruben-vintage-rug-terracotta-and-blue.jpg",
     style: "italian",
     furnitureType: "carpet",
-    price: "£149",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/stockholm-rug-flatwoven-handmade-stripe-grey-50397246/"
+    price: "£299",
+    store: "Made.com",
+    link: "https://www.made.com/ruben-vintage-rug-terracotta-and-blue"
   },
   {
     id: "min_r1",
-    name: "TYVELSE Rug",
-    image: "https://www.ikea.com/gb/en/images/products/tyvelse-rug-low-pile-off-white__0607180_pe681772_s5.jpg",
+    name: "The White Company Jute Rug",
+    image: "https://thewhitecompany.scene7.com/is/image/TheWhiteCompany/Jute-Rug-Natural/RUNAJ2XLNATU_1_large?$D_PDP_412x412$",
     style: "minimalistic",
     furnitureType: "carpet",
-    price: "£80",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/tyvelse-rug-low-pile-off-white-40428276/"
+    price: "£195",
+    store: "The White Company",
+    link: "https://www.thewhitecompany.com/rugs/jute-rug/"
   },
   {
     id: "or_r1",
-    name: "VONSBÄK Rug",
-    image: "https://www.ikea.com/gb/en/images/products/vonsbaek-rug-low-pile-dark-green__0928177_pe789745_s5.jpg",
+    name: "Dunelm Sakura Blossom Rug",
+    image: "https://media.dunelm.com/i/dunelm/30813849_alt17?$standardplayerdefault$&img404=noimagedefault",
     style: "oriental",
     furnitureType: "carpet",
-    price: "£120",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/vonsbaek-rug-low-pile-dark-green-20428399/"
+    price: "£129",
+    store: "Dunelm",
+    link: "https://www.dunelm.com/product/sakura-blossom-rug-1000172418"
   },
   {
     id: "cl_r1",
-    name: "HULSIG Rug",
-    image: "https://www.ikea.com/gb/en/images/products/hulsig-rug-low-pile-beige__0928175_pe789743_s5.jpg",
+    name: "Loaf Persian Garden Rug",
+    image: "https://images.loaf.com/fit-in/2048x2048/images/products/persian-garden-rug-in-rose-pink.jpg",
     style: "classic",
     furnitureType: "carpet",
-    price: "£95",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/hulsig-rug-low-pile-beige-80428273/"
+    price: "£495",
+    store: "Loaf",
+    link: "https://loaf.com/products/persian-garden-rug"
   },
   {
     id: "mod_r1",
-    name: "LANGSTED Rug",
-    image: "https://www.ikea.com/gb/en/images/products/langsted-rug-low-pile-light-blue__0607181_pe681773_s5.jpg",
+    name: "Made Novi Geometric Rug",
+    image: "https://images.made.com/image/upload/c_pad,d_madeplusgrey.svg,f_auto,w_982,h_736/v1/spree/assets/images/attachments/novi-geometric-rug-charcoal-and-gold.jpg",
     style: "modern",
     furnitureType: "carpet",
-    price: "£25",
-    store: "IKEA",
-    link: "https://www.ikea.com/gb/en/p/langsted-rug-low-pile-light-blue-80428278/"
+    price: "£249",
+    store: "Made.com",
+    link: "https://www.made.com/novi-geometric-rug-charcoal-and-gold"
   }
 ];
