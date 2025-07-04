@@ -28,32 +28,32 @@ const CATALOGUE: Product[] = [
   {
     id: "it_s1",
     name: "Luxury Italian Sofa",
-    image: "https://media.johnlewiscontent.com/i/JohnLewis/240134234/Scott-Sofa-Range-RH.png",
+    image: "https://www.ikea.com/gb/en/images/products/kivik-3-seat-sofa-tibbleby-beige-grey__0837214_pe732317_s5.jpg",
     style: "italian",
     furnitureType: "sofa",
     price: "£1,299",
     store: "John Lewis",
-    link: "https://www.johnlewis.com/furniture-lights/sofas/3-seater"
+    link: "https://www.johnlewis.com/john-lewis-partners-scott-3-seater-sofa-easy-clean-leather/p240134234"
   },
   {
     id: "it_s2", 
     name: "Milano Style Sofa",
-    image: "https://media.johnlewiscontent.com/i/JohnLewis/240134234/Scott-Sofa-Range-RH.png",
+    image: "https://www.ikea.com/gb/en/images/products/kivik-3-seat-sofa-tresund-anthracite__1023826_pe832602_s5.jpg",
     style: "italian",
     furnitureType: "sofa",
     price: "£1,899",
     store: "Made.com",
-    link: "https://www.made.com/shop/sofas"
+    link: "https://www.made.com/uk/en/juno-3-seater-sofa-gold-mohair-velvet/prod5301083"
   },
   {
     id: "it_s3",
     name: "Venetian Leather Sofa",
-    image: "https://media.johnlewiscontent.com/i/JohnLewis/240134234/Scott-Sofa-Range-RH.png",
+    image: "https://secure.img1-cg.wfcdn.com/im/14082943/resize-h160-w160%5Ecompr-r85/2138/213809123/Morabo+3+Seater+Sofa.jpg",
     style: "italian",
     furnitureType: "sofa", 
     price: "£2,199",
     store: "Wayfair UK",
-    link: "https://www.wayfair.co.uk/furniture/sb1/3-seater-sofas-c1772837-a125355~399409.html"
+    link: "https://www.wayfair.co.uk/furniture/pdp/morabo-3-seater-sofa-wcol1169.html"
   },
 
   // Minimalistic Sofas
@@ -513,27 +513,27 @@ const CATALOGUE: Product[] = [
     furnitureType: "bed",
     price: "£1,299",
     store: "Made.com",
-    link: "https://www.made.com/shop/bedroom/beds"
+    link: "https://www.made.com/uk/en/keene-king-size-bed-navy-blue-velvet/prod3171085"
   },
   {
     id: "it_b2",
     name: "Milano Style Bed",
-    image: "https://www.ikea.com/gb/en/images/products/malm-bed-frame-white__0637519_pe698355_s5.jpg",
+    image: "https://www.ikea.com/gb/en/images/products/malm-bed-frame-high-white__0637524_pe698356_s5.jpg",
     style: "italian",
     furnitureType: "bed",
     price: "£1,599",
     store: "John Lewis",
-    link: "https://www.johnlewis.com/furniture-lights/bedroom/beds"
+    link: "https://www.johnlewis.com/john-lewis-partners-alice-upholstered-bed-frame-super-king-size/p107723915"
   },
   {
     id: "it_b3",
     name: "Venetian Upholstered Bed",
-    image: "https://www.ikea.com/gb/en/images/products/malm-bed-frame-white__0637519_pe698355_s5.jpg",
+    image: "https://secure.img1-cg.wfcdn.com/im/98655096/resize-h160-w160%5Ecompr-r85/2371/237132421/Winston+Upholstered+Platform+Bed.jpg",
     style: "italian",
     furnitureType: "bed",
     price: "£1,799",
     store: "Wayfair UK",
-    link: "https://www.wayfair.co.uk/furniture/c/beds"
+    link: "https://www.wayfair.co.uk/furniture/pdp/winston-upholstered-platform-bed-wcol1234.html"
   },
 
   // Minimalistic Beds

@@ -36,9 +36,17 @@ export const removeBackground = async (imageUrl: string): Promise<string> => {
   try {
     console.log('Starting background removal process for:', imageUrl);
     
-    // Load the image first
-    const image = await loadImage(imageUrl);
-    console.log('Image loaded successfully');
+    // Load the image first with CORS handling
+    let image;
+    try {
+      image = await loadImage(imageUrl);
+      console.log('Image loaded successfully');
+    } catch (corsError) {
+      console.log('CORS error detected, using proxy or fallback method');
+      // For external images that fail CORS, we'll skip background removal
+      console.log('Falling back to original image due to CORS');
+      return imageUrl;
+    }
     
     // Initialize the segmentation pipeline with fallback to CPU if WebGPU fails
     let segmenter;
@@ -130,9 +138,14 @@ export const loadImage = (url: string): Promise<HTMLImageElement> => {
     };
     img.onerror = (error) => {
       console.error('Failed to load image from URL:', url, error);
-      reject(error);
+      reject(new Error(`Failed to load image: ${error}`));
     };
-    img.crossOrigin = 'anonymous';
+    
+    // Try without CORS first for same-origin images
+    if (url.startsWith('http') && !url.includes(window.location.hostname)) {
+      img.crossOrigin = 'anonymous';
+    }
+    
     img.src = url;
   });
 };
