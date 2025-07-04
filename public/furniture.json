@@ -1,0 +1,37 @@
+[
+  {
+    "id": "ikea-klippan",
+    "type": "sofa",
+    "style": "modern",
+    "image": "https://www.ikea.com/gb/en/images/products/klippan-sofa__11185_ph1790126_s5.jpg",
+    "purchase_url": "https://www.ikea.com/gb/en/p/klippan-sofa-90365252/"
+  },
+  {
+    "id": "ikea-kivik",
+    "type": "sofa",
+    "style": "modern",
+    "image": "https://www.ikea.com/gb/en/images/products/kivik-sofa__07147_ph1619915_s5.jpg",
+    "purchase_url": "https://www.ikea.com/gb/en/p/kivik-sofa-hillared-dark-blue-60493869/"
+  },
+  {
+    "id": "made-scott",
+    "type": "sofa",
+    "style": "mid-century",
+    "image": "https://media.made.com/media/catalog/product/s/c/scott_3_seater_sofa_forest_green_velvet_acacia_leg_front_main_1_1.jpg",
+    "purchase_url": "https://www.made.com/scott-3-seater-sofa-forest-green-velvet"
+  },
+  {
+    "id": "sofa-haru",
+    "type": "sofa",
+    "style": "minimalist",
+    "image": "https://media.sofa.com/media/catalog/product/cache/1/image/800x600/9df78eab33525d08d6e5fb8d27136e95/h/a/haru-2-seater-pebble-grey.jpg",
+    "purchase_url": "https://www.sofa.com/sofas/plain/haru-2-seater-sofa-bed-pebble-grey"
+  },
+  {
+    "id": "loaf-lovebird",
+    "type": "chair",
+    "style": "modern",
+    "image": "https://www.loaf.com/images/products/lovebird-chair/lovebird-chair-cotton-mix-brushed-cotton-vintage-pink.jpg",
+    "purchase_url": "https://loaf.com/products/lovebird-chair"
+  }
+]
